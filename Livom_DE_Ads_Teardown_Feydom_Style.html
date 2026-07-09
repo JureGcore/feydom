@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Livom (DE) — Facebook Ads Teardown</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red: #a21318; --red-dk: #7d0f13;
+  --black: #0f0f0e; --dark: #1a1a18;
+  --mid: #575451; --gray: #989490;
+  --lt: #ccc8c2; --bg: #f3f1ec; --white: #ffffff;
+  --font: 'Montserrat', sans-serif; --font-body: 'Open Sans', sans-serif;
+  --max: 1170px; --pad: 48px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body); color: var(--black); overflow-x: hidden;
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(ellipse 80% 55% at 100% 0%, rgba(162,19,24,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 70% at 0% 100%, rgba(162,19,24,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 35% at 50% 50%, rgba(215,213,210,.22) 0%, transparent 65%);
+  background-attachment: fixed;
+}
+.container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+h1, h2, h3, h4 { font-family: var(--font); }
+.th { font-weight: 100; letter-spacing: -.01em; }
+
+.eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--red); display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--red); }
+
+.link-red {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--red); text-decoration: none; border-bottom: 1.5px solid var(--red); padding-bottom: 2px;
+}
+.link-red:hover { opacity: .7; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 64px; background: rgba(255,255,255,.95); backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); height: 100%;
+  display: flex; align-items: center; justify-content: space-between; overflow-x: auto; }
+.nav-logo { font-size: 14px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--black); white-space: nowrap; }
+.nav-logo span { color: var(--red); }
+.nav-links { display: flex; gap: 22px; list-style: none; }
+.nav-links a { font-size: 10.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); text-decoration: none; white-space: nowrap; }
+.nav-links a:hover { color: var(--red); }
+
+.progress { position: fixed; top:0; left:0; height:3px; background: linear-gradient(90deg, var(--red), var(--red-dk)); width:0%; z-index: 301; transition: width .1s ease; }
+
+section { padding: 90px var(--pad); max-width: var(--max); margin: 0 auto; }
+section.tight { padding: 70px var(--pad); }
+.hero-sec { padding-top: 150px; }
+
+.h2 { font-size: clamp(34px, 4.4vw, 56px); font-weight: 700; line-height: 1.02; letter-spacing: -.03em; margin-bottom: 20px; }
+.h2 em { font-style: italic; color: var(--red); font-weight: 700; }
+.lede { font-size: 17px; line-height: 1.7; color: var(--mid); max-width: 800px; margin-bottom: 10px; }
+
+.hero-h1 { font-size: clamp(40px, 6vw, 74px); font-weight: 700; line-height: .98; letter-spacing: -.03em; color: var(--black); margin: 10px 0 22px; max-width: 900px; }
+.hero-h1 em { font-style: italic; color: var(--red); }
+.hero-sub { font-size: 17px; line-height: 1.75; color: var(--mid); max-width: 680px; margin-bottom: 30px; }
+
+.stat-grid { display:grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 30px; }
+.stat-card {
+  background: var(--white); border: 1px solid #e6e2db; border-radius: 16px; padding: 24px 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.04);
+}
+.stat-card .num { font-size: 32px; font-weight: 800; color: var(--red); letter-spacing: -.02em; }
+.stat-card .lab { font-size: 12.5px; color: var(--mid); margin-top: 6px; line-height: 1.4; }
+
+.card {
+  background: var(--white); border: 1px solid #e6e2db; border-radius: 18px; padding: 30px 30px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.05);
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+@media (max-width: 900px) { .grid-2, .grid-3, .stat-grid { grid-template-columns: 1fr; } }
+
+.tag { display:inline-block; font-size: 10px; font-weight:700; letter-spacing:.14em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 20px; background: rgba(162,19,24,.09); color: var(--red); margin-bottom: 12px; }
+
+blockquote { border-left: 3px solid var(--red); padding: 4px 0 4px 16px; margin: 12px 0; font-style: italic; color: var(--black); font-size: 14.5px; line-height:1.6; }
+blockquote .en { display:block; color: var(--mid); font-style: normal; font-size: 12.5px; margin-top:4px; }
+
+.formula-box {
+  background: var(--bg); border: 1.5px dashed var(--red); border-radius: 16px;
+  padding: 26px 28px; margin-top: 22px; font-size: 15px; line-height: 2; color: var(--black);
+}
+.chip { display:inline-block; background: rgba(162,19,24,.1); color: var(--red);
+  padding: 4px 11px; border-radius: 7px; margin: 3px 4px; font-weight:600; font-size: 13px; }
+
+.phrase-card { background: var(--white); border: 1px solid #e6e2db; border-radius: 14px; padding: 20px 22px; margin-bottom: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.03); }
+.phrase-card .ph-count { font-size: 22px; font-weight: 800; color: var(--red); float: right; }
+.phrase-card .ph-de { font-family: var(--font); font-weight: 600; font-size: 15px; color: var(--black); }
+.phrase-card .ph-en { font-size: 13px; color: var(--mid); margin-top: 4px; }
+
+table { width:100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.04);}
+th { text-align:left; background: var(--bg); color: var(--mid); padding: 12px 14px; font-weight:700; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #e6e2db; }
+td { padding: 12px 14px; border-bottom: 1px solid #efece5; vertical-align: top; color: var(--black); }
+td.num { text-align:center; color: var(--red); font-weight:700; }
+td.txt { color: var(--mid); }
+tr:hover td { background: #fbf9f5; }
+
+.tx-card { background: var(--white); border: 1px solid #e6e2db; border-radius: 16px; padding: 22px 26px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.04); }
+.tx-head { display:flex; align-items:center; gap: 14px; flex-wrap:wrap; margin-bottom: 10px; }
+.tx-rank { font-size: 22px; font-weight: 800; color: var(--red); }
+.tx-count { background: rgba(162,19,24,.08); color: var(--red); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .04em; }
+.tx-dates { font-size: 12px; color: var(--mid); }
+.tx-dates em { font-style: normal; color: var(--gray); }
+.tx-link { font-size: 11.5px; color: var(--gray); margin-bottom: 10px; }
+.tx-body { font-size: 13.5px; line-height: 1.75; color: var(--black); background: var(--bg); border-radius: 10px; padding: 14px 16px; }
+
+.timeline-wrap { margin-top: 34px; }
+.tl-row { display:flex; align-items:stretch; height: 54px; border-radius: 10px; overflow:hidden; margin-bottom:10px; }
+.tl-seg { display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; position:relative; }
+.tl-seg.none { background: repeating-linear-gradient(45deg, #e6e2db, #e6e2db 8px, #f3f1ec 8px, #f3f1ec 16px); color: var(--mid); }
+.tl-seg.sale { background: linear-gradient(135deg, var(--red), var(--red-dk)); }
+.tl-axis { display:flex; justify-content: space-between; font-size: 10.5px; color: var(--gray); margin-top: 4px; }
+
+.takeaway { border: 1px solid #cfe3d2; background: #f3f8f4; border-radius: 14px; padding: 18px 22px; margin-top: 14px; }
+.takeaway h4 { color: #3f7a4d; font-size: 12.5px; text-transform: uppercase; letter-spacing:.08em; margin-bottom: 8px; font-weight: 700; }
+.takeaway p { color: var(--mid); font-size: 14px; line-height: 1.65; max-width: none; }
+
+footer { text-align:center; padding: 50px var(--pad); color: var(--gray); font-size: 11.5px; border-top: 1px solid #e6e2db; margin-top: 20px; }
+
+.pillbar { display:flex; gap:8px; flex-wrap:wrap; margin-top: 16px; }
+.pill { background: var(--bg); border:1px solid #e6e2db; border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--mid); }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">LIVOM<span>·</span>DE AD TEARDOWN</div>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#bigidea">Big Idea</a></li>
+      <li><a href="#phrases">Phrases</a></li>
+      <li><a href="#sales">Sale Cycle</a></li>
+      <li><a href="#engine">Engine</a></li>
+      <li><a href="#ugc">UGC</a></li>
+      <li><a href="#texts">Top Texts</a></li>
+      <li><a href="#videos">Top Videos</a></li>
+      <li><a href="#playbook">Playbook</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero-sec" id="overview">
+  <div class="eyebrow">Competitive Intelligence · Meta Ad Library · Germany</div>
+  <h1 class="hero-h1">How Livom actually runs <em>Facebook ads</em> in Germany</h1>
+  <p class="hero-sub">A teardown of 516 German-market ads (livom.de), run between April 2025 and July 2026, sourced directly from Meta's Ad Library. Not a guess at their strategy — what the data shows: what they say, how often, in what format, and for how long.</p>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="num">516</div><div class="lab">Ads run pointing to livom.de since 2025</div></div>
+    <div class="stat-card"><div class="num">82</div><div class="lab">Distinct ad concepts — most tested once, then dropped</div></div>
+    <div class="stat-card"><div class="num">42 days</div><div class="lab">Median lifespan of a single ad unit</div></div>
+    <div class="stat-card"><div class="num">26</div><div class="lab">Distinct UGC creators cycling through the program</div></div>
+  </div>
+</section>
+
+<section id="bigidea">
+  <div class="eyebrow">01 — Positioning</div>
+  <h2 class="h2">One idea does almost all the work: <em>"the sofa adapts to you, not the other way around."</em></h2>
+  <p class="lede">The verb <em>anpassen / anpasst</em> ("to adapt") appears roughly 149 times across the corpus — the single most repeated concept in their entire ad library. Every seemingly different ad — pets, kids, moving house, stained cushions, decor-indecision jokes — is the same repositioning line with a different life scenario plugged in.</p>
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card">
+      <div class="tag">The core line</div>
+      <blockquote>"Weil dein Sofa sich anpassen soll, nicht du."<span class="en">Because your sofa should adapt — not you.</span></blockquote>
+    </div>
+    <div class="card">
+      <div class="tag">The reframe</div>
+      <blockquote>"Warum nicht ein Sofa, das sich deinem Leben anpasst – statt umgekehrt?"<span class="en">Why not a sofa that adapts to your life — instead of the other way around?</span></blockquote>
+    </div>
+    <div class="card">
+      <div class="tag">The permission</div>
+      <blockquote>"Kinder, Haustiere, Snacks auf der Couch? Gar kein Problem."<span class="en">Kids, pets, snacks on the couch? No problem at all.</span></blockquote>
+    </div>
+  </div>
+  <div class="pillbar">
+    <span class="pill">Haustiere (pets) · 19×</span>
+    <span class="pill">Flecken (stains) · 110×</span>
+    <span class="pill">Kinder (kids) · 7×</span>
+    <span class="pill">Umzug (moving) · 9×</span>
+    <span class="pill">Familien (families) · 16×</span>
+    <span class="pill">Farbe/Stoffe (color/fabric indecision) · 139× / 119×</span>
+    <span class="pill">Baby · 8×</span>
+    <span class="pill">Pinterest (aspiration) · 7×</span>
+  </div>
+</section>
+
+<section id="phrases">
+  <div class="eyebrow">02 — Messaging Mechanics</div>
+  <h2 class="h2">These aren't keywords — they're <em>one locked sentence</em></h2>
+  <p class="lede">Every "risk-reversal" word we counted earlier almost never appears alone. They're links in a single fixed chain, reused nearly word-for-word across hundreds of ads. Here's the exact phrase each word lives inside, and how often that phrase (not just the word) recurs.</p>
+
+  <div class="formula-box">
+    <span class="chip">🎨 In 50+ Farben &amp; Stoffen individuell wählbar</span> →
+    <span class="chip">📦 Kostenlose Lieferung &amp; Montage</span> →
+    <span class="chip">🔁 100 Tage risikofrei testen</span> →
+    <span class="chip">– Rückgabe garantiert</span> →
+    <span class="chip">🛋️ Zum Probesitzen in ganz Deutschland</span>
+    <div style="color:var(--mid); font-size:13px; margin-top:10px;">
+      Choose from 50+ colors/fabrics → free delivery &amp; assembly → 100-day risk-free trial → return guaranteed → plus a nationwide showroom network to try it in person.
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:26px;">
+    <div>
+      <div class="phrase-card"><span class="ph-count">102×</span><div class="ph-de">"In 50+ Farben &amp; Stoffen individuell wählbar 📦 Kostenlose Lieferung &amp; Montage"</div><div class="ph-en">"Choose from 50+ colors &amp; fabrics — free delivery &amp; assembly" — Farbe never appears alone; it's always this exact hand-off into the delivery promise.</div></div>
+      <div class="phrase-card"><span class="ph-count">94–102×</span><div class="ph-de">"...Montage 🔁 100 Tage risikofrei testen – Rückgabe garantiert 🛋️ Zum Probesitzen..."</div><div class="ph-en">Montage, 100 Tage, risikofrei and Rückgabe are one uninterrupted sentence — none of them shows up independently of the other three.</div></div>
+      <div class="phrase-card"><span class="ph-count">94×</span><div class="ph-de">"...Rückgabe garantiert 🛋️ Zum Probesitzen in ganz Deutschland 👉 Finde jetzt dein passendes Sofa..."</div><div class="ph-en">"...return guaranteed. Try it in-store anywhere in Germany. Find your perfect sofa now." — the standard closing line of the evergreen ad.</div></div>
+    </div>
+    <div>
+      <div class="phrase-card"><span class="ph-count">8×</span><div class="ph-de">"...Rückgabe garantiert 🛋️ Probesitzen in München, Berlin, Hamburg, Düsseldorf, Frankfurt &amp; Dresden"</div><div class="ph-en">Same closing line, city-list variant — swaps "ganz Deutschland" for six named cities.</div></div>
+      <div class="phrase-card"><span class="ph-count">5×</span><div class="ph-de">"✨ 5 Jahre Garantie + 100 Tage Probesitzen ✨ Kostenlose Lieferung &amp; Montage"</div><div class="ph-en">The UGC variant — Garantie is reframed as a "5-year warranty," paired with the same 100-day trial + free delivery pair.</div></div>
+      <div class="phrase-card"><span class="ph-count">5×</span><div class="ph-de">"Welche Farbe und Stoff wäre euer Favorit? 🙃 (Anzeige)"</div><div class="ph-en">The only time "Farbe" escapes the core formula — it becomes an engagement-bait color-poll caption instead.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="sales">
+  <div class="eyebrow">03 — Promotional Cadence</div>
+  <h2 class="h2">Not <em>always</em> on sale — <em>brand-building first, then permanently on sale</em></h2>
+  <p class="lede">Checked every day of coverage rather than assuming: Livom ran zero discount-percentage ads for the first ~7 months in this dataset. Discounting only starts in November 2025 — then it never stops.</p>
+
+  <div class="timeline-wrap">
+    <div class="tl-row">
+      <div class="tl-seg none" style="flex:218;">Apr 1 – Nov 5, 2025 — no discount ads (≈31 weeks, brand-only messaging)</div>
+      <div class="tl-seg sale" style="flex:236;">Nov 6, 2025 – Jun 30, 2026 — continuous rotating discount (≈34 weeks)</div>
+    </div>
+    <div class="tl-axis"><span>Apr 2025</span><span>Nov 2025</span><span>Jul 2026</span></div>
+  </div>
+
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="stat-card"><div class="num">63%</div><div class="lab">Black Friday — Nov 2025</div></div>
+    <div class="stat-card"><div class="num">55%→40%</div><div class="lab">Winter Sale — Dec 2025 → Feb 2026</div></div>
+    <div class="stat-card"><div class="num">30%→47%</div><div class="lab">Spring Sale — Mar → Apr 2026</div></div>
+  </div>
+  <div class="stat-card" style="margin-top:14px; max-width: 320px;"><div class="num">43%</div><div class="lab">Summer Sale — Jun 2026 (most recent, still the live promo as of Jul 9, 2026)</div></div>
+
+  <div class="takeaway">
+    <h4>What this actually means</h4>
+    <p>Livom spent roughly its first 7 months of paid social (through late 2025) building the "adapts to you" brand line with zero discounting. Once the discount machine switched on in November 2025, coverage became continuous — no gap longer than the overlap of consecutive sales — through at least July 2026. If you're earlier in your own brand's lifecycle, this suggests a sequencing worth copying: establish the positioning first, then layer in permanent, rotating urgency once the message is proven.</p>
+  </div>
+</section>
+
+<section id="engine">
+  <div class="eyebrow">04 — Creative Operations</div>
+  <h2 class="h2">This is a <em>performance-marketing churn engine</em>, not a "campaign"</h2>
+  <p class="lede">82 distinct text concepts exist, but the distribution is extremely lopsided — a handful of proven winners get scaled hard, while a long tail of one-off ideas get tried once and dropped.</p>
+  <div class="grid-2" style="margin-top:24px;">
+    <div class="card">
+      <h3 style="margin-bottom:14px; font-size:16px;">Concept volume (variants per idea)</h3>
+      <div class="phrase-card"><span class="ph-count">94</span><div class="ph-de">Evergreen "adapts to you" ad</div></div>
+      <div class="phrase-card"><span class="ph-count">18</span><div class="ph-de">Winter Sale 40% creative</div></div>
+      <div class="phrase-card"><span class="ph-count">13</span><div class="ph-de">"Terra" product ad</div></div>
+      <div class="phrase-card"><span class="ph-count">~1.5</span><div class="ph-de">Average variants for the remaining ~78 concepts</div></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:14px; font-size:16px;">Ad lifespan (516 ads)</h3>
+      <div class="phrase-card"><span class="ph-count">5%</span><div class="ph-de">Killed within 1 week (25 ads)</div></div>
+      <div class="phrase-card"><span class="ph-count">12%</span><div class="ph-de">Killed within 2 weeks (63 ads)</div></div>
+      <div class="phrase-card"><span class="ph-count">40%</span><div class="ph-de">Killed within 1 month (209 ads)</div></div>
+      <div class="phrase-card"><span class="ph-count">42 days</span><div class="ph-de">Median lifespan across all ads</div></div>
+    </div>
+  </div>
+  <p class="lede" style="margin-top:26px;">Inside the 94-variant evergreen ad, the text never changes. What varies: the <strong>video edit</strong> (81 distinct video files across 90 video-format ads), the <strong>CTA button</strong> (75× "Learn more" vs 19× "Shop now"), and the <strong>landing page</strong> (72× homepage, 20× the modular-sofas collection page). Targeting differences are invisible to us — Meta's Ad Library doesn't expose that data.</p>
+  <div class="takeaway">
+    <h4>The relaunch pattern</h4>
+    <p>A video is never paired with more than one script — checked every asset, zero exceptions. Instead, the same winning video+text pair gets resubmitted as a brand-new ad unit every 3–9 weeks for up to 10 months straight, almost certainly to reset Meta's frequency/fatigue penalties rather than to test something new.</p>
+  </div>
+</section>
+
+<section id="ugc">
+  <div class="eyebrow">05 — Influencer Layer</div>
+  <h2 class="h2">A standing bench of <em>26 German creators</em>, same script every time</h2>
+  <p class="lede">Not occasional influencer dabbling — a systematic, repeatable production format running in parallel with the direct-response ads.</p>
+  <div class="grid-3" style="margin-top:26px;">
+    <div class="card">
+      <div class="tag">The script</div>
+      <p style="font-size:13.5px; color:var(--mid); line-height:1.7;">1. Relatable problem ("our old sofa gave up after 10 years / 2 kids")<br>2. Livom reveal + swatches/showroom visit<br>3. Personal discount code<br>4. Risk-reversal close (100 days, warranty, free delivery)</p>
+    </div>
+    <div class="card">
+      <div class="tag">Top creators (DE)</div>
+      <p style="font-size:13.5px; color:var(--mid); line-height:1.7;">7Sohn (12) · svenja.eichert (9) · Mytwins_and_I (6) · Call me Sabi (6) · melina.hoch (5) · jenniferlange (5) · sassy_jessy (5) · ellas.homestory (5) · +18 more</p>
+    </div>
+    <div class="card">
+      <div class="tag">Personal discount codes</div>
+      <blockquote>"...spare mit meinem Code „MELINA" ganze 100€ ab 1.500€"<span class="en">save with my code "MELINA" — €100 off orders over €1,500</span></blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="tight" id="texts">
+  <div class="eyebrow">06 — Data: Most-Repeated Ad Texts</div>
+  <h2 class="h2">Top 10 exact texts, full wording</h2>
+  
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#1</span>
+            <span class="tx-count">94× repeated</span>
+            <span class="tx-dates">Sep 03, 2025 → Jul 09, 2026 <em>(44.1 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/; https://livom.de/collections/donna_kollektion; https://livom.de/collections/harvey_kollektion; https://livom.de/collections/modulare-sofas</div>
+          <div class="tx-body">😍 Modular &amp; waschbar – weil dein Sofa sich anpassen soll, nicht du.<br><br>✔ Modular &amp; jederzeit erweiterbar<br>🧼 Waschbare Bezüge – Flecken? Kein Problem.<br>🎨 In 50+ Farben &amp; Stoffen individuell wählbar<br>📦 Kostenlose Lieferung &amp; Montage<br>🔁 100 Tage risikofrei testen – Rückgabe garantiert<br>🛋️ Zum Probesitzen in ganz Deutschland<br><br>👉 Finde jetzt dein passendes Sofa in wenigen Klicks.</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#2</span>
+            <span class="tx-count">18× repeated</span>
+            <span class="tx-dates">Feb 06, 2026 → Mar 02, 2026 <em>(3.4 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/pages/winter-sale</div>
+          <div class="tx-body">🛋️ Modular &amp; waschbar – Sofas, die sich deinem Leben anpassen.<br>Winter Sale: bis zu 40% Vorteil ❄️<br><br>✔ Modular &amp; wandelbar<br>✔ Waschbare Bezüge<br>✔ Nachhaltig produziert<br>✔ Lieferung &amp; Aufbau inklusive<br><br>Mehr Ruhe. Mehr Komfort. Mehr Zuhause.</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#3</span>
+            <span class="tx-count">13× repeated</span>
+            <span class="tx-dates">Mar 24, 2026 → Jun 23, 2026 <em>(13.0 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/collections/terra</div>
+          <div class="tx-body">Du suchst ein Sofa, in das du dich richtig fallen lassen kannst? Terra bietet spürbare Tiefe, großzügige Formen und einen Komfort, der weich und gleichzeitig stabil stützend ist. Drei Komfortzonen – Alltagssitzen, entspanntes Zurücklehnen und fast liegendes Lounge-Feeling – vereinen sich in einem modularen System, das mit deinem Alltag mitgeht. Zeitlos im Design, damit es in jedes Zuhause passt</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#4</span>
+            <span class="tx-count">11× repeated</span>
+            <span class="tx-dates">Dec 18, 2025 → Feb 02, 2026 <em>(6.6 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/pages/winter-sale</div>
+          <div class="tx-body">🛋️ Modular &amp; waschbar – Sofas, die sich deinem Leben anpassen.<br>Winter Sale: bis zu 55 % Vorteil ❄️<br><br>✔ Modular &amp; wandelbar<br>✔ Waschbare Bezüge<br>✔ Nachhaltig produziert<br>✔ Lieferung &amp; Aufbau inklusive<br><br>Mehr Ruhe. Mehr Komfort. Mehr Zuhause.</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#5</span>
+            <span class="tx-count">8× repeated</span>
+            <span class="tx-dates">Sep 03, 2025 → May 02, 2026 <em>(34.4 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/</div>
+          <div class="tx-body">🛋️ Das letzte Sofa, das du brauchst – weil es modular &amp; waschbar ist.<br><br>✔ Modular &amp; jederzeit erweiterbar<br>🧼 Waschbare Bezüge – Flecken? Kein Problem.<br>🎨 In 50+ Farben &amp; Stoffen individuell wählbar<br>📦 Kostenlose Lieferung &amp; Montage<br>🔁 100 Tage risikofrei testen – Rückgabe garantiert<br>🛋️ Probesitzen in München, Berlin, Hamburg, Düsseldorf, Frankfurt &amp; Dresden<br><br>👉 Finde jetzt dein passendes Sofa in wenigen Klicks.</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#6</span>
+            <span class="tx-count">5× repeated</span>
+            <span class="tx-dates">Nov 27, 2025 → Jul 09, 2026 <em>(32.0 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/</div>
+          <div class="tx-body">Endlich haben wir unser Traumsofa gefunden 🫶🏼 | Anzeige <br><br>Eins, das sich unserem Leben anpasst!<br><br>✨ wasch- und wechselbare Bezüge<br>✨ modular &amp; verstellbar – genau so, wie es gerade passt<br>✨ perfekt mit Haustieren &amp; bald Baby<br>→ keine sichtbaren Spuren, keine Flecken-Panik 😅<br><br>Egal ob Besuch, Umstellen, Chillen oder Filmeabend – mit den Sofas von @livomofficial ist alles möglich 🙌<br><br>Sichere dir jetzt dein perfektes Sofa<br>und spare mit meinem Code „MELINA“ ganze 100€ ab 1.500€ <br><br>✨ 5 Jahre Garantie + 100 Tage Probesitzen <br>✨ Kostenlose Lieferung &amp; Montage</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#7</span>
+            <span class="tx-count">5× repeated</span>
+            <span class="tx-dates">Nov 06, 2025 → Jun 29, 2026 <em>(33.6 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/; https://livom.de/collections/modulare-sofas</div>
+          <div class="tx-body">Anzeige| Ein ganz neues Wohngefühl 🥹💚 Wer hätte gedacht, dass waldgrün so gemütlich und einladend wirken kann? Ich liebe es!<br>Unser neues Sofa ist von @livomofficial –<br>wasch- und wechselbare Bezüge (Gamechanger für Familien! 😅), sowie modular wandel- und erweiterbar. Weil sich das Leben nun mal verändert 🙌🏼<br><br>Aktuell gibt’s bei den Black Weeks bis zu 63% Rabatt + mit meinem Code „JENNIFERLANGE“ 100€ extra ab 1.500€ Bestellwert.<br>Welche Farbe würdet ihr euch für euer Traumsofa aussuchen?</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#8</span>
+            <span class="tx-count">5× repeated</span>
+            <span class="tx-dates">Nov 01, 2025 → Jun 01, 2026 <em>(30.3 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/</div>
+          <div class="tx-body">Nächster Bauabschnitt? Unser Wohnzimmer! 🛋️✨ Wir haben uns auf Pinterest in ein modulares Sofa von Livom verliebt – perfekt für alle, die Kids, Chaos und Haustiere zu Hause haben und gleichzeitig Design lieben. Lieferzeit: 6-8 Wochen. <br>Die Frage des Tages: Schaffen wir es, bis dahin das Wohnzimmer überhaupt fertig zu stellen oder muss wieder eine Interimslösung her? Begleite uns auf der Reise zu unserer neuen Couch. <br><br>#LivingRoomMakeover #Livom #ModularesSofa #FamilyLife #InteriorGoals #HomeWithPets</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#9</span>
+            <span class="tx-count">5× repeated</span>
+            <span class="tx-dates">Nov 24, 2025 → Jul 09, 2026 <em>(32.4 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/; https://livom.de/collections/modulare-sofas</div>
+          <div class="tx-body">Welche Farbe und Stoff wäre euer Favorit? 🙃 (Anzeige) Klickt im Voting euren 1. Favorit an und schreibt in die Kommis euren 2. Favorit 🥰<br><br>Leider kann ich nicht alle hier in die Abstimmung packen, darum schon mal die 4, die für mich in der engeren Auswahl wären 🤗<br><br>Ich bin echt überfragt, die sind alle so toll 🤗<br><br>#livom #sofa #couch #interior #möbel #schlafsofa #stoffe #entscheidung #sololiving #alleineleben #lifestyle #ü30 #30er</div>
+        </div>
+        <div class="tx-card">
+          <div class="tx-head">
+            <span class="tx-rank">#10</span>
+            <span class="tx-count">4× repeated</span>
+            <span class="tx-dates">Dec 11, 2025 → Jun 02, 2026 <em>(24.7 wks span)</em></span>
+          </div>
+          <div class="tx-link">Landing page(s): https://livom.de/; https://livom.de/collections/modulare-sofas</div>
+          <div class="tx-body">100€ Extrarabatt mit HOME100 | anzeige<br><br>Nachdem ich erst ein Jahr immer auf dem Boden gechillt hab und dann ein Luftmatratzensofa hatte, hab ich jetzt endlich ein richtiges Sofa. 😍 Ich liebs so sehr. <br><br>Das Sofa ist von @livomofficial und gerade reduziert. Mit meinem Code HOME100 bekommt ihr nochmal 100€ Rabatt auf alles ab einem Bestellwert von 1.500€.🤍</div>
+        </div>
+  <p style="font-size:12.5px; color:var(--gray); margin-top:10px;">Full list of 20 texts + all 201 underlying ads with Ad Library links available in the companion spreadsheet/export.</p>
+</section>
+
+<section class="tight" id="videos">
+  <div class="eyebrow">07 — Data: Most-Reused Video Assets</div>
+  <h2 class="h2">Top 10 videos by cumulative time on air</h2>
+  <p class="lede">Same underlying video file, decoded from a stable asset ID embedded in Meta's CDN links, tracked across every re-launch.</p>
+  <table>
+    <thead><tr><th>#</th><th>Total airtime</th><th>Relaunches</th><th>Advertiser</th><th>Paired text</th><th>Link</th></tr></thead>
+    <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="num">45.6 wks</td>
+      <td class="num">5×</td>
+      <td>svenja.eichert</td>
+      <td class="txt">Nächster Bauabschnitt? Unser Wohnzimmer! 🛋️✨ Wir haben uns auf Pinterest in ein modulares Sofa von Livom verliebt – perfekt für alle, die Ki</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=855212583731995" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="num">42.9 wks</td>
+      <td class="num">9×</td>
+      <td>Livom</td>
+      <td class="txt">😍 Modular &amp; waschbar – weil dein Sofa sich anpassen soll, nicht du.  ✔ Modular &amp; jederzeit erweiterbar 🧼 Waschbare Bezüge – Flecken? Kein Pr</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=1141380411438297" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="num">42.1 wks</td>
+      <td class="num">7×</td>
+      <td>Livom</td>
+      <td class="txt">😍 Modular &amp; waschbar – weil dein Sofa sich anpassen soll, nicht du.  ✔ Modular &amp; jederzeit erweiterbar 🧼 Waschbare Bezüge – Flecken? Kein Pr</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=1536143237827881" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="num">41.6 wks</td>
+      <td class="num">5×</td>
+      <td>jenniferlange</td>
+      <td class="txt">Anzeige| Ein ganz neues Wohngefühl 🥹💚 Wer hätte gedacht, dass waldgrün so gemütlich und einladend wirken kann? Ich liebe es! Unser neues Sof</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=1505007577413448" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="num">40.6 wks</td>
+      <td class="num">6×</td>
+      <td>Livom</td>
+      <td class="txt">😍 Modular &amp; waschbar – weil dein Sofa sich anpassen soll, nicht du.  ✔ Modular &amp; jederzeit erweiterbar 🧼 Waschbare Bezüge – Flecken? Kein Pr</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=2088572745300880" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="num">39.0 wks</td>
+      <td class="num">5×</td>
+      <td>melina.hoch</td>
+      <td class="txt">Endlich haben wir unser Traumsofa gefunden 🫶🏼 | Anzeige   Eins, das sich unserem Leben anpasst!  ✨ wasch- und wechselbare Bezüge ✨ modular &amp;</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=1533171671166149" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="num">39.0 wks</td>
+      <td class="num">7×</td>
+      <td>Livom</td>
+      <td class="txt">😍 Modular &amp; waschbar – weil dein Sofa sich anpassen soll, nicht du.  ✔ Modular &amp; jederzeit erweiterbar 🧼 Waschbare Bezüge – Flecken? Kein Pr</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=1287925752930871" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="num">38.1 wks</td>
+      <td class="num">5×</td>
+      <td>Livom</td>
+      <td class="txt">😍 Modular &amp; waschbar – weil dein Sofa sich anpassen soll, nicht du.  ✔ Modular &amp; jederzeit erweiterbar 🧼 Waschbare Bezüge – Flecken? Kein Pr</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=1195186982457149" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="num">38.0 wks</td>
+      <td class="num">4×</td>
+      <td>Judith Jelena</td>
+      <td class="txt">Unser neuer Interior-Sofa-Style mit Livom Anzeige| Ihr kennt das: Die alte Farbe wirkt langweilig oder braucht einfach ein kleines Upgrade? </td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=2253903822013466" target="_blank">View ad</a></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="num">37.6 wks</td>
+      <td class="num">6×</td>
+      <td>Livom</td>
+      <td class="txt">😍 Modular &amp; waschbar – weil dein Sofa sich anpassen soll, nicht du.  ✔ Modular &amp; jederzeit erweiterbar 🧼 Waschbare Bezüge – Flecken? Kein Pr</td>
+      <td><a class="link-red" href="https://www.facebook.com/ads/library/?id=1425626455363221" target="_blank">View ad</a></td>
+    </tr></tbody>
+  </table>
+</section>
+
+<section id="playbook">
+  <div class="eyebrow">08 — So What Should You Do</div>
+  <h2 class="h2">Playbook notes for entering the <em>German market</em></h2>
+  <div class="grid-2" style="margin-top:20px;">
+    <div class="card"><h3 style="margin-bottom:10px; font-size:16px;">1. Pick one repositioning line, repeat relentlessly</h3><p style="font-size:14px; color:var(--mid); line-height:1.7;">Livom's library boils down to one sentence reused ~150 times. Find your version of "adapts to you, not the other way around" and let every ad be a variation on it.</p></div>
+    <div class="card"><h3 style="margin-bottom:10px; font-size:16px;">2. Lead with risk-reversal, not craftsmanship</h3><p style="font-size:14px; color:var(--mid); line-height:1.7;">Trial period, free returns, free delivery/assembly should dominate copy 10-15× more than quality/heritage claims — that's the real objection for online furniture buyers.</p></div>
+    <div class="card"><h3 style="margin-bottom:10px; font-size:16px;">3. Build a UGC bench, not one-off posts</h3><p style="font-size:14px; color:var(--mid); line-height:1.7;">Recruit rotating creators with a repeatable script (problem → reveal → personal code → risk-reversal). Reuse each creator's code across multiple pieces for cleaner attribution.</p></div>
+    <div class="card"><h3 style="margin-bottom:10px; font-size:16px;">4. Establish the message first, discount second</h3><p style="font-size:14px; color:var(--mid); line-height:1.7;">Livom ran ~7 months of brand-only ads before ever discounting. Once it started, it never stopped — but positioning came first.</p></div>
+    <div class="card"><h3 style="margin-bottom:10px; font-size:16px;">5. Rotate winning creative, don't "set and forget"</h3><p style="font-size:14px; color:var(--mid); line-height:1.7;">Relaunch best-performing video/text pairs as fresh ad units every 4-8 weeks to dodge frequency fatigue.</p></div>
+    <div class="card"><h3 style="margin-bottom:10px; font-size:16px;">6. Expect ~40% of new creative to die within a month</h3><p style="font-size:14px; color:var(--mid); line-height:1.7;">Budget for aggressive testing and fast kill decisions — only 3-4 concepts out of 82 ever scaled past 10 variants.</p></div>
+  </div>
+</section>
+
+<footer>Compiled from Meta Ad Library data for the Livom Facebook page (livom.de), ads active since April 2025. For internal competitive-strategy use.</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement;
+  var pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+</body>
+</html>
