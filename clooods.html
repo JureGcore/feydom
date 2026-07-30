@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clooods – Modular Sofa | FEYDOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#9c2b2b;
+    --red-dark:#7a1f1f;
+    --red-soft:#f2e2df;
+    --cream:#f7f4ef;
+    --offwhite:#fbfaf7;
+    --ink:#201c1a;
+    --gray:#726b64;
+    --gray-light:#a49c93;
+    --line:#e7e0d6;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:'Manrope',sans-serif;color:var(--ink);background:var(--offwhite);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;margin:0;padding:0;}
+  img{max-width:100%;display:block;}
+  .container{max-width:1320px;margin:0 auto;padding:0 40px;}
+  button{font-family:inherit;cursor:pointer;background:none;border:none;}
+  .section{padding:54px 0;}
+  .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:10px;display:block;}
+
+  /* ---------- Topbar / Header (shared) ---------- */
+  .topbar{background:var(--ink);color:#f1ece4;font-size:12.5px;letter-spacing:.02em;}
+  .topbar .container{display:flex;justify-content:space-between;align-items:center;padding:7px 40px;flex-wrap:wrap;gap:6px;}
+  .topbar span{opacity:.9}
+  .topbar .dot{margin:0 8px;opacity:.5}
+  header.main{position:sticky;top:0;z-index:50;background:rgba(251,250,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;font-size:23px;letter-spacing:.02em;}
+  .logo-img{height:42px;width:auto;display:block;}
+  .logo .mark{background:var(--red);color:#fff;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Manrope',sans-serif;font-weight:700;font-size:15px;}
+  nav.primary{display:flex;gap:34px;}
+  nav.primary a{font-size:14px;font-weight:500;color:var(--ink);padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s;}
+  nav.primary a:hover{border-color:var(--red);}
+  .nav-icons{display:flex;align-items:center;gap:20px;}
+  .nav-icons .icon{width:19px;height:19px;opacity:.85;}
+  .pill-cta{background:var(--ink);color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;}
+  .btn{padding:14px 28px;border-radius:100px;font-size:14px;font-weight:600;border:1px solid transparent;transition:all .2s;display:inline-block;}
+  .btn-solid{background:#fff;color:var(--ink);}
+  .btn-solid:hover{background:var(--red);color:#fff;}
+  .btn-outline{border:1px solid var(--line);color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .btn-red{background:var(--red);color:#fff;border-color:var(--red);}
+  .btn-red:hover{background:var(--red-dark);}
+
+  /* ---------- Breadcrumb ---------- */
+  .breadcrumb{padding:18px 0;border-bottom:1px solid var(--line);}
+  .breadcrumb a{font-size:13.5px;font-weight:600;color:var(--gray);display:inline-flex;align-items:center;gap:6px;}
+  .breadcrumb a:hover{color:var(--red);}
+
+  /* ---------- Product hero ---------- */
+  .product-hero{padding:40px 0 20px;}
+  .ph-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:50px;align-items:start;}
+  .gallery-main{border-radius:16px;overflow:hidden;position:relative;background:#f1efe9;}
+  .gallery-main img{width:100%;height:440px;object-fit:cover;}
+  .gallery-sale{position:absolute;top:16px;left:16px;background:var(--red);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:100px;}
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;}
+  .gallery-grid div{border-radius:10px;overflow:hidden;height:100px;background:#fff;border:1px solid var(--line);}
+  .gallery-grid img{width:100%;height:100%;object-fit:cover;}
+  .gallery-grid .diagram img{object-fit:contain;padding:8px;}
+  .view-all-photos{display:inline-block;margin-top:14px;font-size:13px;font-weight:600;border-bottom:1px solid var(--ink);}
+
+  .buy-box h1{font-size:32px;font-weight:600;margin:0 0 8px;}
+  .rating-row{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--gray);margin-bottom:14px;}
+  .rating-row .stars{color:#f2c14e;letter-spacing:2px;font-size:14px;}
+  .rating-row a{text-decoration:underline;color:var(--gray);}
+  .spec-row{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:var(--gray);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:16px;}
+  .spec-row span{display:flex;align-items:center;gap:6px;}
+  .buy-price{font-size:28px;font-weight:700;margin-bottom:16px;}
+  .buy-desc{font-size:14.5px;color:var(--gray);line-height:1.6;margin-bottom:26px;}
+
+  .option-block{margin-bottom:24px;}
+  .option-block > label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);margin-bottom:10px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .config-chip{
+    border:1px solid var(--line);border-radius:10px;padding:8px 10px 7px;text-align:center;
+    background:#fff;min-width:78px;position:relative;
+  }
+  .config-chip img{height:34px;width:100%;object-fit:contain;margin-bottom:6px;}
+  .config-chip span{font-size:11px;font-weight:600;display:block;}
+  .config-chip .dim{font-size:10px;color:var(--gray);}
+  .config-chip.active{border-color:var(--ink);}
+  .config-chip .current-tag{
+    position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+    background:var(--ink);color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;white-space:nowrap;
+  }
+  .text-chip{
+    border:1px solid var(--line);border-radius:100px;padding:9px 16px;font-size:13px;font-weight:600;
+    background:#fff;position:relative;
+  }
+  .text-chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .text-chip .sale-tag{
+    position:absolute;top:-8px;right:-6px;background:var(--red);color:#fff;font-size:9px;font-weight:700;
+    padding:2px 6px;border-radius:100px;
+  }
+  .material-note{font-size:12.5px;color:var(--gray);margin-top:8px;}
+  .material-note u{color:var(--ink);text-decoration:underline;cursor:pointer;}
+  .color-chip{width:38px;height:38px;border-radius:8px;border:2px solid transparent;position:relative;}
+  .color-chip.active{border-color:var(--ink);}
+  .color-chip .sale-tag{
+    position:absolute;top:-8px;right:-8px;background:var(--red);color:#fff;font-size:8px;font-weight:700;
+    padding:1px 5px;border-radius:100px;
+  }
+  .color-note{font-size:12.5px;color:var(--gray);margin-top:8px;}
+  .color-note .flag{color:var(--red);font-weight:600;}
+
+  .config-summary{
+    background:var(--cream);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:13px;color:var(--gray);margin-bottom:16px;
+  }
+  .config-summary strong{color:var(--ink);}
+
+  .summary-card{
+    background:var(--cream);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;margin-bottom:16px;
+  }
+  .summary-card .summary-price{font-size:26px;font-weight:700;margin-bottom:4px;}
+  .summary-card .summary-line{font-size:12.5px;color:var(--gray);margin-bottom:4px;}
+  .summary-card .summary-line:last-child{margin-bottom:0;}
+  .summary-card .summary-line a{text-decoration:underline;color:var(--gray);}
+  .info-dot{display:inline-block;width:14px;height:14px;border-radius:50%;border:1px solid var(--gray-light);text-align:center;font-size:9px;line-height:13px;margin-left:2px;}
+  .payment-row{max-width:100%;height:auto;margin:0 0 20px;border:1px solid var(--line);border-radius:8px;}
+
+  .addons-inline{border-top:1px solid var(--line);margin-top:6px;padding-top:22px;}
+  .addons-inline h3{font-size:16px;font-weight:600;margin:0 0 14px;font-family:'Fraunces',serif;}
+  .addons-row-mini{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}
+  .addons-row-mini::-webkit-scrollbar{display:none;}
+  .addon-card-mini{flex:0 0 96px;text-align:left;}
+  .addon-card-mini .tag{font-size:9.5px;color:var(--gray);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block;}
+  .addon-img-mini{height:80px;background-size:cover;background-position:center;border-radius:8px;border:1px solid var(--line);margin-bottom:6px;}
+  .addon-card-mini .name{font-size:11.5px;font-weight:600;color:var(--ink);}
+  .addon-card-mini .price{font-size:11px;color:var(--gray);}
+
+  .trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;font-size:12.5px;color:var(--gray);margin:20px 0 14px;}
+  .trust-grid span{display:flex;align-items:center;gap:7px;}
+  .showroom-link{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    border:1px solid var(--line);border-radius:10px;padding:11px;font-size:13px;font-weight:600;margin-bottom:12px;
+  }
+  .showroom-link:hover{border-color:var(--ink);}
+  .sample-line{font-size:13px;color:var(--gray);margin-bottom:20px;}
+  .sample-line a{text-decoration:underline;color:var(--ink);}
+  .util-row{display:flex;gap:20px;font-size:12.5px;color:var(--gray);margin-bottom:18px;}
+  .util-row span{cursor:pointer;}
+  .accordion{border-top:1px solid var(--line);}
+  .accordion summary{
+    padding:14px 2px;font-size:13.5px;font-weight:600;cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;list-style:none;
+  }
+  .accordion summary::-webkit-details-marker{display:none;}
+  .accordion p{font-size:13px;color:var(--gray);padding:0 2px 16px;line-height:1.6;margin:0;}
+
+  /* ---------- Modular parts ---------- */
+  .modular-parts{padding-top:20px;background:var(--cream);}
+  .parts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:760px;}
+  .part-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line);}
+  .part-img{height:150px;background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#fff;}
+  .part-label{display:block;padding:13px 16px;font-size:13.5px;font-weight:600;color:var(--ink);border-top:1px solid var(--line);}
+  @media (max-width:700px){.parts-grid{grid-template-columns:1fr 1fr;max-width:100%;}}
+
+  /* ---------- Addons ---------- */
+  .addons{padding-top:10px;background:var(--cream);}
+  .addons-row{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px;}
+  .addons-row::-webkit-scrollbar{display:none;}
+  .addon-card{flex:0 0 178px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;}
+  .addon-img{height:110px;background-size:contain;background-repeat:no-repeat;background-position:center;margin-bottom:10px;}
+  .addon-name{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+  .addon-price{font-size:13px;color:var(--gray);margin-bottom:12px;}
+  .btn-sm{
+    display:block;width:100%;text-align:center;box-sizing:border-box;
+    padding:9px 10px;font-size:11px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+    border:1px solid var(--red);color:var(--red);border-radius:100px;transition:all .2s;
+  }
+  .btn-sm:hover{background:var(--red);color:#fff;}
+
+  /* ---------- Layout dimensions (tabs) ---------- */
+  .dims-section{padding-top:10px;}
+  .dims-tabs{display:flex;gap:30px;border-bottom:1px solid var(--line);margin-bottom:26px;}
+  .dims-tab{padding:0 0 14px;font-size:13px;font-weight:600;color:var(--gray);border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .dims-tab.active{color:var(--ink);border-color:var(--ink);}
+  .dims-panel{display:none;}
+  .dims-panel.active{display:block;}
+  .dims-panel h2{font-size:24px;font-weight:600;margin:0 0 8px;}
+  .dims-panel > p{color:var(--gray);font-size:14.5px;margin:0 0 24px;}
+  .dims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .dims-card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff;}
+  .dims-card img{height:110px;width:100%;object-fit:contain;margin-bottom:14px;}
+  .dims-card .name{font-size:13.5px;font-weight:600;margin-bottom:4px;}
+  .dims-card .dim{font-size:13px;color:var(--gray);}
+  .dims-note{font-size:12.5px;color:var(--gray-light);margin-top:24px;padding-top:20px;border-top:1px solid var(--line);line-height:1.6;}
+
+  /* ---------- Struktur (Aufbau) ---------- */
+  .struktur-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;align-items:center;}
+  .layer-list{list-style:none;margin:0;padding:0;background:var(--cream);border-radius:var(--radius);padding:22px 26px;}
+  .layer-list li{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px;color:var(--ink);}
+  .layer-list li:last-child{border-bottom:none;}
+  .layer-list .num{
+    width:24px;height:24px;border-radius:50%;background:var(--red-soft);color:var(--red);
+    font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+  }
+  .struktur-txt h3{font-size:22px;font-weight:700;margin:0 0 10px;color:var(--ink);}
+  .struktur-txt p{color:var(--gray);font-size:14px;line-height:1.65;margin:0 0 22px;max-width:420px;}
+  .cert-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .cert-badge{
+    display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;
+    padding:10px 14px;font-size:12px;font-weight:700;color:var(--ink);
+  }
+  .cert-badge .ic{font-size:16px;}
+  @media (max-width:800px){ .struktur-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Umbau & Anleitung ---------- */
+  .umbau-grid{display:grid;grid-template-columns:1fr 0.9fr;gap:50px;align-items:center;}
+  .umbau-stage{border-radius:var(--radius);background:var(--cream);padding:34px;text-align:center;}
+  .umbau-stage img{max-width:100%;max-height:200px;}
+  .umbau-stage .cap{margin-top:14px;font-size:13.5px;font-weight:700;color:var(--ink);}
+  .umbau-range{width:100%;accent-color:var(--red);margin-top:18px;}
+  .umbau-hint{text-align:center;font-size:12px;color:var(--gray);margin-top:8px;}
+  .umbau-txt h3{font-size:22px;font-weight:700;margin:0 0 10px;color:var(--ink);}
+  .umbau-txt p{color:var(--gray);font-size:14px;line-height:1.65;margin:0 0 8px;max-width:420px;}
+  @media (max-width:800px){ .umbau-grid{grid-template-columns:1fr;} }
+
+  .manual-dl{
+    display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:12px 22px;
+    border:1px solid var(--ink);border-radius:100px;font-size:13px;font-weight:600;color:var(--ink);
+  }
+  .manual-dl:hover{background:var(--ink);color:#fff;}
+  .dims-placeholder{color:var(--gray);font-size:14px;padding:30px 0;}
+  @media (max-width:900px){.dims-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ---------- Assemble & fasten ---------- */
+  .assemble{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;max-width:1320px;margin:0 auto 54px;box-shadow:0 20px 50px rgba(30,20,15,.06);}
+  .assemble-grid{display:grid;grid-template-columns:0.95fr 1.05fr;align-items:stretch;}
+  .assemble-txt{padding:48px 56px;display:flex;flex-direction:column;justify-content:center;}
+  .assemble-txt h2{font-size:30px;font-weight:700;margin:0 0 16px;color:var(--ink);font-family:'Manrope',sans-serif;}
+  .assemble-txt p{color:var(--gray);font-size:14.5px;line-height:1.65;}
+  .assemble-media{position:relative;min-height:360px;background:#111;}
+  .assemble-media video{width:100%;height:100%;object-fit:cover;display:block;}
+  .assemble-play{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);border:none;
+    display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--ink);cursor:pointer;
+  }
+  @media (max-width:900px){.assemble-grid{grid-template-columns:1fr;}.assemble-media{min-height:260px;}}
+
+  /* ---------- Awards (static grid) ---------- */
+  .awards-static{padding:56px 0 60px;background:#f5f3ee;}
+  .awards-static-head{text-align:center;max-width:640px;margin:0 auto 40px;}
+  .awards-static-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;max-width:900px;margin:0 auto;}
+  .award-item{text-align:center;}
+  .award-item img{height:64px;width:auto;object-fit:contain;margin:0 auto 16px;}
+  .award-item .name{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:6px;}
+  .award-item .status{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--red);}
+  @media (max-width:700px){.awards-static-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ---------- Comparison: Der Unterschied ---------- */
+  .diff-section{padding:60px 0;}
+  .diff-head{text-align:center;max-width:640px;margin:0 auto 36px;}
+  .diff-head h2{font-size:30px;font-weight:600;margin:8px 0 12px;}
+  .diff-head p{color:var(--gray);font-size:14.5px;line-height:1.6;}
+  .diff-table{
+    max-width:980px;margin:0 auto;border-radius:20px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 50px rgba(30,20,15,.06);background:#fff;
+  }
+  .diff-row{display:grid;grid-template-columns:1.1fr 1.5fr 1.5fr;align-items:center;}
+  .diff-row.head{background:var(--ink);color:#fff;}
+  .diff-row.head .diff-cat{color:#fff;}
+  .diff-row.head .diff-us{color:#fff;font-weight:700;}
+  .diff-row.head .diff-them{color:#cfc7ba;font-weight:600;}
+  .diff-row + .diff-row{border-top:1px solid var(--line);}
+  .diff-row:nth-child(even):not(.head){background:var(--cream);}
+  .diff-cat{display:flex;align-items:center;gap:10px;padding:18px 20px;font-size:13.5px;font-weight:700;color:var(--ink);}
+  .diff-cat .ic{font-size:16px;}
+  .diff-us{padding:18px 20px;font-size:14px;color:var(--ink);border-left:1px solid var(--line);}
+  .diff-us::before{content:'✓ ';color:var(--red);font-weight:700;}
+  .diff-them{padding:18px 20px;font-size:13.5px;color:var(--gray-light);border-left:1px solid var(--line);}
+  .diff-them::before{content:'– ';}
+  .diff-tagline{text-align:center;max-width:620px;margin:32px auto 0;color:var(--gray);font-size:14.5px;font-style:italic;line-height:1.6;}
+  @media (max-width:700px){
+    .diff-row{grid-template-columns:1fr;}
+    .diff-row.head{display:none;}
+    .diff-cat{border-bottom:1px solid var(--line);background:var(--cream);}
+    .diff-us,.diff-them{border-left:none;padding:12px 20px;}
+  }
+
+  /* ---------- Practicality (sticky scroll) ---------- */
+  .practicality{padding:60px 0 60px;}
+  .practicality-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:start;}
+  .practicality-sticky{position:sticky;top:110px;}
+  .practicality-sticky .eyebrow{display:block;margin-bottom:18px;}
+  .practicality-list{list-style:none;margin:0 0 26px;padding:0;}
+  .practicality-list li{
+    font-family:'Fraunces',serif;font-size:36px;font-weight:600;line-height:1.35;
+    color:var(--gray-light);background:transparent;transition:color .35s ease, background .35s ease;
+    padding:2px 6px;margin-left:-6px;border-radius:6px;cursor:default;
+  }
+  .practicality-list li.active{color:var(--ink);background:var(--red-soft);}
+  .practicality-desc{color:var(--gray);font-size:15px;line-height:1.65;max-width:440px;min-height:66px;}
+  .practicality-desc strong{color:var(--ink);}
+  .practicality-media{display:flex;flex-direction:column;gap:24px;}
+  .practicality-panel{
+    height:78vh;border-radius:var(--radius);background-size:cover;background-position:center;
+    scroll-margin-top:110px;
+  }
+  @media (max-width:900px){
+    .practicality-grid{grid-template-columns:1fr;gap:26px;}
+    .practicality-sticky{position:static;}
+    .practicality-list li{font-size:26px;}
+    .practicality-panel{height:340px;}
+  }
+
+  /* ---------- Configure CTA (single wide card) ---------- */
+  .configure-cta{padding:0 0 10px;}
+  .configure-cta-card{
+    background:var(--cream);border-radius:24px;padding:20px;
+    display:flex;align-items:center;gap:44px;
+  }
+  .configure-cta-card img{
+    width:46%;flex:0 0 46%;border-radius:16px;object-fit:cover;aspect-ratio:16/10;
+  }
+  .configure-cta-txt{flex:1;padding-right:20px;}
+  .configure-cta-txt h2{font-size:32px;font-weight:800;line-height:1.2;margin:0 0 14px;color:var(--ink);font-family:'Manrope',sans-serif;}
+  .configure-cta-txt p{font-size:14.5px;line-height:1.6;color:var(--gray);margin:0 0 22px;max-width:440px;}
+  .configure-cta-btn{
+    display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);
+    border:1.5px solid var(--ink);padding:13px 26px;border-radius:100px;
+    font-size:13.5px;font-weight:600;
+  }
+  @media (max-width:800px){
+    .configure-cta-card{flex-direction:column;padding:16px;}
+    .configure-cta-card img{width:100%;flex:0 0 auto;}
+    .configure-cta-txt{padding-right:0;}
+  }
+
+  /* ---------- Try it: Termin / Muster / Konfigurator ---------- */
+  .try-section{padding:60px 0;}
+  .try-heading{max-width:640px;margin:0 auto 32px;text-align:center;}
+  .try-heading h2{font-size:34px;font-weight:700;line-height:1.2;margin:8px 0 0;color:var(--ink);font-family:'Fraunces',serif;}
+  .try-heading h2 em{font-style:italic;color:var(--red);}
+  .try-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .try-card{
+    position:relative;border-radius:20px;overflow:hidden;min-height:420px;
+    background-size:cover;background-position:center;display:flex;align-items:flex-end;
+  }
+  .try-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 38%, rgba(0,0,0,.8) 100%);}
+  .try-card-txt{position:relative;z-index:2;color:#fff;padding:28px;}
+  .try-card-txt .cat{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#f2a6a6;display:block;margin-bottom:8px;}
+  .try-card-txt h3{font-family:'Manrope',sans-serif;font-size:20px;font-weight:800;line-height:1.25;margin:0 0 10px;}
+  .try-card-txt p{font-size:13.5px;line-height:1.6;color:#e9e4dd;margin-bottom:16px;}
+  .try-card-btn{
+    display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);
+    padding:12px 20px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  }
+  @media (max-width:900px){
+    .try-grid{grid-template-columns:1fr;}
+    .try-card{min-height:340px;}
+  }
+
+  /* ---------- Reviews (Livom style + real data) ---------- */
+  .reviews-section{padding:60px 0 70px;background:var(--cream);}
+  .reviews-head{max-width:640px;margin:0 auto 36px;text-align:center;}
+  .reviews-head h2{font-size:34px;font-weight:700;margin:8px 0 10px;color:var(--ink);}
+  .reviews-head p{color:var(--gray);font-size:14.5px;}
+  .rating-summary{
+    display:flex;align-items:center;gap:32px;max-width:820px;margin:0 auto 28px;
+    background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 30px;
+    box-shadow:0 20px 50px rgba(30,20,15,.05);
+  }
+  .rating-summary .big{text-align:center;flex:0 0 auto;}
+  .rating-summary .big .num{font-family:'Fraunces',serif;font-size:42px;font-weight:600;color:var(--ink);line-height:1;}
+  .rating-summary .big .stars{color:#f2c14e;font-size:15px;margin:6px 0 4px;}
+  .rating-summary .big .count{font-size:12px;color:var(--gray);}
+  .rating-bars{flex:1;display:flex;flex-direction:column;gap:6px;}
+  .rating-bars .bar-row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--gray);}
+  .rating-bars .bar-row .label{flex:0 0 32px;}
+  .rating-bars .bar-track{flex:1;height:6px;border-radius:6px;background:var(--line);overflow:hidden;}
+  .rating-bars .bar-fill{height:100%;background:#f2c14e;border-radius:6px;}
+  .rating-bars .bar-row .n{flex:0 0 22px;text-align:right;}
+  .filter-pills{display:flex;justify-content:center;gap:10px;margin-bottom:30px;flex-wrap:wrap;}
+  .filter-pills span{
+    padding:8px 16px;border-radius:100px;font-size:12.5px;font-weight:600;border:1px solid var(--line);color:var(--gray);background:#fff;
+  }
+  .filter-pills span.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .reviews-rail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;}
+  .reviews-rail::-webkit-scrollbar{height:6px;}
+  .reviews-rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px;}
+  .review-card{
+    flex:0 0 300px;min-height:280px;border-radius:var(--radius);position:relative;
+    overflow:hidden;background-size:cover;background-position:center;scroll-snap-align:start;color:#fff;
+  }
+  .review-card::before{
+    content:'';position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(10,8,6,.25) 0%, rgba(10,8,6,.15) 30%, rgba(10,8,6,.88) 100%);
+  }
+  .review-card .rc-top{position:relative;z-index:2;padding:18px 18px 0;}
+  .review-card .rc-top .stars{color:#f2c14e;font-size:13px;margin-bottom:8px;display:block;}
+  .review-card .rc-top p{font-size:13px;line-height:1.55;margin:0;color:#f6f2ec;}
+  .review-card .rc-bottom{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;
+  }
+  .review-card .rc-bottom .name{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .review-card .rc-bottom .meta{font-size:11px;opacity:.85;display:flex;align-items:center;gap:6px;}
+  .review-card .rc-bottom .verified{color:#8fd19e;}
+  .reviews-more{text-align:center;margin-top:26px;}
+  .reviews-more a{font-size:13px;font-weight:600;text-decoration:underline;color:var(--ink);}
+  @media (max-width:700px){
+    .rating-summary{flex-direction:column;gap:18px;}
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-section{padding:60px 0;}
+  .faq-head{text-align:center;max-width:640px;margin:0 auto;}
+  .faq-list{max-width:820px;margin:34px auto 0;border-top:1px solid var(--line);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{
+    padding:22px 4px;font-size:16px;font-weight:600;color:var(--ink);cursor:pointer;
+    display:flex;justify-content:space-between;align-items:center;list-style:none;gap:20px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary .chev{transition:transform .25s ease;font-size:13px;color:var(--gray);flex:0 0 auto;}
+  .faq-item[open] summary .chev{transform:rotate(180deg);}
+  .faq-item p{padding:0 4px 22px;margin:0;color:var(--gray);font-size:14.5px;line-height:1.7;max-width:760px;}
+
+  /* ---------- Andere Clooods Modelle (product-card, home-page style) ---------- */
+  .other-models{padding:60px 0 70px;background:var(--cream);}
+  .other-models-head{text-align:center;max-width:640px;margin:0 auto 32px;}
+  .carousel-wrap{position:relative;}
+  .carousel{
+    display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:8px;scrollbar-width:none;
+  }
+  .carousel::-webkit-scrollbar{display:none;}
+  .product-card{
+    flex:0 0 300px;scroll-snap-align:start;
+    background:#fff;border-radius:var(--radius);overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .product-card .img{
+    height:260px;position:relative;overflow:hidden;isolation:isolate;
+    background:linear-gradient(165deg, #e9e5d9 0%, #d7d1c1 55%, #c7c0ac 100%);
+    background-size:cover;background-position:center;
+  }
+  .badge-row{position:absolute;top:14px;left:14px;display:flex;gap:6px;z-index:2;}
+  .badge{
+    font-size:11px;font-weight:700;padding:5px 10px;border-radius:100px;
+    background:#fff;color:var(--ink);
+  }
+  .badge.sale{background:var(--red);color:#fff;}
+  .product-card .body{padding:16px 18px 20px;}
+  .product-card h4{margin:0 0 4px;font-size:15.5px;font-weight:600;color:var(--ink);}
+  .product-card .meta{font-size:12.5px;color:var(--gray);margin-bottom:6px;}
+  .rating-line{font-size:12px;color:var(--gray);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .rating-line .stars{color:#f2c14e;}
+  .price-row{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);}
+  .other-models-more{text-align:center;margin-top:22px;}
+  .other-models-more a{font-size:13px;font-weight:600;text-decoration:underline;color:var(--ink);}
+  @media (max-width:700px){
+    .product-card{flex:0 0 240px;}
+    .product-card .img{height:200px;}
+  }
+
+  /* ---------- Footer (shared) ---------- */
+  footer{background:var(--ink);color:#e8e2d8;padding:46px 0 22px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr;gap:32px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,.12);}
+  .footer-grid h5{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#a49c93;margin:0 0 14px;}
+  .footer-grid a{display:block;font-size:14px;color:#e8e2d8;margin-bottom:9px;opacity:.9;}
+  .footer-grid a:hover{opacity:1;text-decoration:underline;}
+  .footer-logo{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:14px;}
+  .footer-grid p{font-size:13.5px;color:#a49c93;line-height:1.6;}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;font-size:12.5px;color:#a49c93;flex-wrap:wrap;gap:10px;}
+  .footer-bottom .legal a{display:inline;margin-right:18px;color:#a49c93;}
+
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:60;
+    width:56px;height:56px;border-radius:50%;background:#25D366;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.25);
+    color:#fff;font-size:26px;
+  }
+  .sticky-bar{
+    position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:70;
+    display:flex;align-items:center;gap:2px;
+    background:rgba(236,233,244,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-radius:100px;padding:6px;box-shadow:0 14px 34px rgba(20,15,10,.18);
+  }
+  .sticky-bar a{padding:11px 18px;font-size:13.5px;font-weight:600;color:var(--ink);border-radius:100px;white-space:nowrap;transition:background .2s;}
+  .sticky-bar a:hover{background:rgba(255,255,255,.65);}
+  .sticky-bar a.cta{background:var(--ink);color:#fff;display:flex;align-items:center;gap:6px;}
+  .sticky-bar a.cta:hover{background:var(--red);}
+
+  @media (max-width:900px){
+    .ph-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    nav.primary,.nav-icons .pill-cta{display:none;}
+  }
+  @media (max-width:700px){
+    .sticky-bar{max-width:94vw;overflow-x:auto;scrollbar-width:none;padding:6px 8px;}
+    .sticky-bar::-webkit-scrollbar{display:none;}
+    .sticky-bar a{padding:9px 14px;font-size:12.5px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="container">
+    <span>📍 7 Showrooms in Germany <span class="dot">·</span> Free in-store consultation</span>
+    <span>Free shipping from €500 <span class="dot">·</span> Up to 5 years warranty</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="main">
+  <div class="nav-row">
+    <a href="feydom-homepage-concept.html" class="logo"><img src="https://www.feydom.si/cdn/shop/files/feydom-logo.jpg" alt="FEYDOM" class="logo-img"></a>
+    <nav class="primary">
+      <a href="feydom-homepage-concept.html#produkte">Sofas</a>
+      <a href="https://designer.feydom.si/">Sofa Configurator</a>
+      <a href="feydom-homepage-concept.html#showrooms">Showrooms</a>
+      <a href="feydom-homepage-concept.html">Fabric Samples</a>
+      <a href="feydom-homepage-concept.html">FAQ</a>
+    </nav>
+    <div class="nav-icons">
+      <span class="icon">🔍</span>
+      <span class="icon">♡</span>
+      <span class="icon">👤</span>
+      <span class="icon">🛍</span>
+      <a href="feydom-homepage-concept.html#showrooms" class="pill-cta">Book an appointment →</a>
+    </div>
+  </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <div class="container">
+    <a href="feydom-homepage-concept.html#produkte">← Back to all sofas</a>
+  </div>
+</div>
+
+<!-- Product hero: gallery + buy box -->
+<section class="product-hero">
+  <div class="container">
+    <div class="ph-grid">
+      <div class="gallery">
+        <div class="gallery-main">
+          <span class="gallery-sale">Sale · up to −18%</span>
+          <img src="https://feydom-de.myshopify.com/cdn/shop/files/fyv4-1_3ae111d1-f328-4116-9fcf-53abec39171d.jpg" alt="Clooods sofa in a living room with image gallery">
+        </div>
+        <div class="gallery-grid">
+          <div class="diagram"><img src="https://feydom-de.myshopify.com/cdn/shop/files/fyimg_a1322f3c-f636-4a6e-b580-3a60c271c66a.jpg" alt="Clooods module diagram"></div>
+          <div><img src="https://feydom-de.myshopify.com/cdn/shop/files/fyimg2_149483cd-b7df-41ed-907b-5d1dfbb3e079.jpg" alt="Clooods lifestyle photo, family"></div>
+          <div><img src="https://feydom-de.myshopify.com/cdn/shop/files/fyimg3_5b60f2c5-7669-4d62-a196-3b5f7e2cc08d.jpg" alt="Clooods lifestyle photo, mother and daughter"></div>
+          <div><img src="https://feydom-de.myshopify.com/cdn/shop/files/fyimg4_ce88e45d-f429-4d56-b361-70358b806311.jpg" alt="Clooods lifestyle photo, family in the living room"></div>
+        </div>
+        <a href="https://feydom-de.myshopify.com/products/clooods-17cm" target="_blank" class="view-all-photos">View all 7 photos ↗</a>
+      </div>
+
+      <div class="buy-box">
+        <h1>Clooods</h1>
+        <div class="rating-row">
+          <span class="stars">★★★★★</span>
+          <a href="https://feydom-de.myshopify.com/products/clooods-17cm" target="_blank">5.0 · 33 reviews</a>
+        </div>
+        <div class="spec-row">
+          <span>🛋️ 4 seats</span>
+          <span>📐 247 × 156 cm</span>
+          <span>↕️ Foot height 17 cm</span>
+          <span>🧺 Removable covers</span>
+        </div>
+        <div class="buy-price" id="priceDisplay">2.443&nbsp;€</div>
+        <p class="buy-desc">Corner sofa today, bed tomorrow: Clooods stands on legs, so everything underneath stays clean too.</p>
+
+        <div class="option-block">
+          <label>Choose configuration</label>
+          <div class="chip-row">
+            <div class="config-chip active" data-part="config" data-value="Clooods">
+              <span class="current-tag">Current</span>
+              <img src="https://feydom-de.myshopify.com/cdn/shop/files/clooods-svg-1_2efcf622-0505-4f1b-b80b-2fa4ccfbd9f3.svg" alt="Clooods floor plan">
+              <span>Clooods</span>
+              <span class="dim">247×156 cm</span>
+            </div>
+            <div class="config-chip" data-part="config" data-value="Clooods 2M">
+              <img src="https://feydom-de.myshopify.com/cdn/shop/files/Clooods-2m-svg_c946812b-817c-408b-9582-3c14c714a035.svg" alt="Clooods 2M floor plan">
+              <span>Clooods 2M</span>
+              <span class="dim">182×91 cm</span>
+            </div>
+            <div class="config-chip" data-part="config" data-value="Clooods 3S">
+              <img src="https://feydom-de.myshopify.com/cdn/shop/files/Clooods-3s-svg_3b6e367d-24a2-4ad6-b7b1-65396c1c4613.svg" alt="Clooods 3S floor plan">
+              <span>Clooods 3S</span>
+              <span class="dim">247×91 cm</span>
+            </div>
+            <div class="config-chip" data-part="config" data-value="Clooods 4S">
+              <img src="https://feydom-de.myshopify.com/cdn/shop/files/Clooods-4s-svg_1ecf6913-8cf1-494e-9c27-2e8a1d8d702e.svg" alt="Clooods 4S floor plan">
+              <span>Clooods 4S</span>
+              <span class="dim">338×91 cm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="option-block">
+          <label>Choose material</label>
+          <div class="chip-row">
+            <div class="text-chip active" data-part="material" data-value="Allure">Allure<span class="sale-tag">-18%</span></div>
+            <div class="text-chip" data-part="material" data-value="Icon">Icon</div>
+            <div class="text-chip" data-part="material" data-value="Mollia">Mollia</div>
+            <div class="text-chip" data-part="material" data-value="Phoenix">Phoenix</div>
+            <div class="text-chip" data-part="material" data-value="Velare">Velare</div>
+            <div class="text-chip" data-part="material" data-value="Astra">Astra</div>
+          </div>
+          <p class="material-note"><strong>Allure</strong> — knit look with a glossy effect · <u onclick="window.open('https://www.feydom.si/collections/prevleke-elementi','_blank')">Learn more</u></p>
+        </div>
+
+        <div class="option-block">
+          <label>Choose colour</label>
+          <div class="chip-row">
+            <div class="color-chip active" style="background:#6b6b6b;" data-part="color" data-value="Middle Grey"></div>
+            <div class="color-chip" style="background:#c9a227;" data-part="color" data-value="Golden Ochre"></div>
+            <div class="color-chip" style="background:#4d6b64;" data-part="color" data-value="Deep Teal"></div>
+            <div class="color-chip" style="background:#d8cfc0;" data-part="color" data-value="Warm Sand">
+              <span class="sale-tag">-18%</span>
+            </div>
+          </div>
+          <p class="color-note" id="colorNote">DE-92: <strong>Middle Grey</strong> · <span class="flag">% Reduced price &amp; available immediately</span></p>
+        </div>
+
+        <div class="option-block">
+          <label>Foot colour</label>
+          <div class="chip-row">
+            <div class="text-chip active" data-part="footcolor" data-value="Light">Light</div>
+            <div class="text-chip" data-part="footcolor" data-value="Dark">Dark</div>
+          </div>
+        </div>
+
+        <div class="option-block" style="margin-bottom:18px;">
+          <label>Foot height</label>
+          <div class="chip-row">
+            <div class="text-chip active" data-part="footheight" data-value="17 cm">17 cm</div>
+            <div class="text-chip" data-part="footheight" data-value="21 cm">21 cm</div>
+          </div>
+        </div>
+
+        <div class="config-summary">
+          Your configuration: <strong id="configSummary">Clooods · Allure · Middle Grey · Light (17 cm)</strong>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-price">2.443&nbsp;€</div>
+          <div class="summary-line">Incl. VAT</div>
+          <div class="summary-line">EAN code: 5310367074954</div>
+          <div class="summary-line">🕐 Handmade for you · 6–8 weeks <span class="info-dot">i</span></div>
+          <div class="summary-line"><span class="stars" style="font-size:11px;">★★★★★</span> <a href="https://feydom-de.myshopify.com/products/clooods-17cm" target="_blank">5.0 · 33 verified reviews</a></div>
+          <div class="summary-line">Change the cover, not the sofa.</div>
+        </div>
+
+        <a href="#" class="btn btn-red" style="width:100%;text-align:center;margin-bottom:18px;">Add to cart 🛍</a>
+
+        <div class="trust-grid">
+          <span>⏱ 100-day risk-free trial</span>
+          <span>🛡 Up to 5 years warranty</span>
+          <span>🇪🇺 Handmade in the EU</span>
+          <span>🚚 Free delivery</span>
+        </div>
+
+        <a href="feydom-homepage-concept.html#showrooms" class="showroom-link">📍 Experience it live in a showroom →</a>
+        <p class="sample-line">Want to feel the fabric first? <a href="https://www.feydom.si/collections/prevleke-elementi">Order up to 5 free samples.</a></p>
+
+        <img class="payment-row" src="https://feydom-de.myshopify.com/cdn/shop/files/Paymentmethods_1024x1024.png" alt="Accepted payment methods: Visa, Mastercard, Maestro, Diners Club, PayPal, Leanpay">
+
+        <div class="util-row" style="justify-content:center;">
+          <span>♡ Save</span>
+          <span>⇄ Compare</span>
+          <span>↗ Share</span>
+        </div>
+
+        <details class="accordion">
+          <summary>Safety and usage notes <span>+</span></summary>
+          <p>Please follow the enclosed care instructions for covers and frame. With proper use, your Clooods sofa will last for years thanks to removable, washable covers and a sturdy beechwood frame.</p>
+        </details>
+
+        <div class="addons-inline">
+          <h3>Complete your sofa</h3>
+          <div class="addons-row-mini">
+            <div class="addon-card-mini">
+              <span class="tag">Cushion</span>
+              <div class="addon-img-mini" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/feydom-blazina-dd-1-de-92.jpg');"></div>
+              <div class="name">Cushion DD-1</div>
+              <div class="price">from 18&nbsp;€</div>
+            </div>
+            <div class="addon-card-mini">
+              <span class="tag">Cushion</span>
+              <div class="addon-img-mini" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/feydom-blazina-dd-2-de-92.jpg');"></div>
+              <div class="name">Cushion DD-2</div>
+              <div class="price">from 18&nbsp;€</div>
+            </div>
+            <div class="addon-card-mini">
+              <span class="tag">Cushion</span>
+              <div class="addon-img-mini" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/feydom-blazina-dd-3-de-92.jpg');"></div>
+              <div class="name">Cushion DD-3</div>
+              <div class="price">from 35&nbsp;€</div>
+            </div>
+            <div class="addon-card-mini">
+              <span class="tag">Table</span>
+              <div class="addon-img-mini" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Coffee-Z-120-01_2c592807-5c2d-4a64-81cd-dff1274830b9.jpg');"></div>
+              <div class="name">Coffee Z</div>
+              <div class="price">960&nbsp;€</div>
+            </div>
+            <div class="addon-card-mini">
+              <span class="tag">Table</span>
+              <div class="addon-img-mini" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/dinner-x-160-04-min.jpg');"></div>
+              <div class="name">Dinner X - 160</div>
+              <div class="price">1.594&nbsp;€</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modular gedacht -->
+<section class="section modular-parts">
+  <div class="container">
+    <span class="eyebrow">Modular by design</span>
+    <h2 class="serif" style="font-size:26px;margin:0 0 8px;">The building blocks of your sofa</h2>
+    <p style="max-width:620px;color:var(--gray);font-size:14.5px;margin:0 0 26px;line-height:1.6;">Each element can be combined, replaced, or added to individually. Here's what makes up your Clooods:</p>
+    <div class="parts-grid">
+      <div class="part-card">
+        <div class="part-img" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FEYDOM-modularne-sedezne-Clooods-Corner-Armchair-DE-92-middle-grey_9da1e381-77a6-44c8-bb85-fdc08e8dd92d.jpg');"></div>
+        <span class="part-label">2× Clooods Corner armchair</span>
+      </div>
+      <div class="part-card">
+        <div class="part-img" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FEYDOM-modularne-sedezne-garniture-Clooods-naslonjac-DE-92-middle-grey.jpg');"></div>
+        <span class="part-label">1× Clooods Armchair</span>
+      </div>
+      <div class="part-card">
+        <div class="part-img" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FEYDOM-modularne-sedezne-garniture-Clooods-tabure-DE-92-middle-grey.jpg');"></div>
+        <span class="part-label">1× Clooods Ottoman</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Layout dimensions -->
+<section class="section dims-section">
+  <div class="container">
+    <div class="dims-tabs">
+      <span class="dims-tab active" data-tab="mass">Dimensions</span>
+      <span class="dims-tab" data-tab="struktur">Structure</span>
+      <span class="dims-tab" data-tab="umbau">Reconfiguring &amp; Manual</span>
+    </div>
+
+    <div class="dims-panel active" id="panel-mass">
+      <h2 class="serif">Layout dimensions</h2>
+      <p>Here's how you can set up your CLOOODS sofa:</p>
+      <div class="dims-grid">
+        <div class="dims-card">
+          <img src="https://feydom-de.myshopify.com/cdn/shop/files/clooods-svg-1_2efcf622-0505-4f1b-b80b-2fa4ccfbd9f3.svg" alt="Clooods as a corner sofa">
+          <div class="name">Corner sofa</div>
+          <div class="dim">247 × 156 cm</div>
+        </div>
+        <div class="dims-card">
+          <img src="https://feydom-de.myshopify.com/cdn/shop/files/Clooods-2m-svg_c946812b-817c-408b-9582-3c14c714a035.svg" alt="Clooods as a two-seater, armchair and ottoman">
+          <div class="name">Two-seater + armchair + ottoman</div>
+          <div class="dim">182×91 cm + 91×65 cm + 85×65 cm</div>
+        </div>
+        <div class="dims-card">
+          <img src="https://feydom-de.myshopify.com/cdn/shop/files/clooods-3s2-svg-1_8264ca1a-e0a5-49f8-8ef1-21c43232e0ef.svg" alt="Clooods as a double lounger">
+          <div class="name">Double lounger</div>
+          <div class="dim">156 × 182 cm</div>
+        </div>
+        <div class="dims-card">
+          <img src="https://feydom-de.myshopify.com/cdn/shop/files/clooods-4sm-svg-1_dacfecc8-4992-4770-ac89-9b4e9b6b15f9.svg" alt="Clooods as a double lounger, wider">
+          <div class="name">Double lounger</div>
+          <div class="dim">180 × 182 cm</div>
+        </div>
+      </div>
+      <p class="dims-note">As every product is handmade, dimensions may vary by up to ±3&nbsp;% from those stated.</p>
+    </div>
+
+    <div class="dims-panel" id="panel-struktur">
+      <div class="struktur-grid">
+        <ul class="layer-list">
+          <li><span class="num">1</span> Fabric cover</li>
+          <li><span class="num">2</span> Inner protective fabric</li>
+          <li><span class="num">3</span> Wadding</li>
+          <li><span class="num">4</span> 10&nbsp;cm high-resilience gel foam</li>
+          <li><span class="num">5</span> 3&nbsp;cm firm foam</li>
+          <li><span class="num">6</span> High-elasticity, hard-wearing rubber webbing</li>
+          <li><span class="num">7</span> Beech and pine wood slats</li>
+          <li><span class="num">8</span> Chipboard and plywood</li>
+        </ul>
+        <div class="struktur-txt">
+          <h3>Modular comfort, reimagined.</h3>
+          <p>Thanks to its multiple layers and protective fabric shell, the sofa is also suitable for allergy sufferers.</p>
+          <div class="cert-row">
+            <span class="cert-badge"><span class="ic">🌲</span> FSC&reg;</span>
+            <span class="cert-badge"><span class="ic">✓</span> OEKO-TEX&reg; STANDARD 100</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dims-panel" id="panel-umbau">
+      <div class="umbau-grid">
+        <div>
+          <div class="umbau-stage">
+            <img id="umbauImg" src="https://feydom-de.myshopify.com/cdn/shop/files/clooods-svg-1_2efcf622-0505-4f1b-b80b-2fa4ccfbd9f3.svg" alt="Clooods configuration">
+            <div class="cap" id="umbauCap">Corner sofa &middot; 247 × 156 cm</div>
+          </div>
+          <input type="range" class="umbau-range" id="umbauRange" min="0" max="3" value="0" step="1">
+          <p class="umbau-hint">Drag the slider to see a few positions.</p>
+        </div>
+        <div class="umbau-txt">
+          <h3>Transform it in just a few steps.</h3>
+          <p>Thanks to the velcro connections, you can reconfigure your Clooods in seconds &ndash; from a corner sofa to a two-seater with armchair and ottoman, to a double lounger, and back. Use the slider on the left to see a few positions.</p>
+        </div>
+      </div>
+    </div>
+
+    <a class="manual-dl" href="https://cdn.shopify.com/s/files/1/0724/0482/8322/files/feydom-anleitung-clooods.pdf" target="_blank">⬇ Download the manual</a>
+  </div>
+</section>
+
+<!-- Assemble & fasten -->
+<section class="assemble">
+  <div class="assemble-grid">
+    <div class="assemble-txt">
+      <h2 class="serif">Assemble and fasten</h2>
+      <p>The elements of the Clooods modular sofa are connected with velcro fastenings placed between the frame and the seat cushions. The double velcro fastenings ensure the sofa won't come apart even when used as a bed, and they're incredibly easy to use. In just a few moments, your sofa transforms into a corner sofa, a two-seater, multiple armchairs, a bed, and more! Clooods is seating tailored to your needs &ndash; in every situation!</p>
+    </div>
+    <div class="assemble-media">
+      <video id="assembleVideoEl" muted loop playsinline poster="https://cdn.shopify.com/s/files/1/0724/0482/8322/files/preview_images/b1adb79d90ea49fd8ad2e09cba03a4f6.thumbnail.0000000000.jpg">
+        <source src="https://cdn.shopify.com/videos/c/o/v/b1adb79d90ea49fd8ad2e09cba03a4f6.mp4" type="video/mp4">
+      </video>
+      <button class="assemble-play" onclick="const v=document.getElementById('assembleVideoEl'); v.controls=true; v.play(); this.style.display='none';">▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- Practicality (sticky scroll) -->
+<section class="section practicality">
+  <div class="container">
+    <div class="practicality-grid">
+      <div class="practicality-sticky">
+        <span class="eyebrow">Practical every day</span>
+        <ul class="practicality-list">
+          <li class="active" data-target="prac-1">Removable covers</li>
+          <li data-target="prac-2">Flexible configuration</li>
+        </ul>
+        <p class="practicality-desc" data-desc-for="prac-1">Worried about stains? Clooods covers are removable and washable &ndash; <strong>and over time, you can simply swap them for new ones.</strong></p>
+        <p class="practicality-desc" data-desc-for="prac-2" style="display:none;">Thanks to the special connection system, you can easily turn a left corner into a right one &ndash; <strong>and any other combination you can imagine.</strong></p>
+      </div>
+      <div class="practicality-media">
+        <div class="practicality-panel" id="prac-1" style="background-image:url('https://www.feydom.si/cdn/shop/files/Prevleka-za-DD1-FF-18.jpg');"></div>
+        <div class="practicality-panel" id="prac-2" style="background-image:url('https://www.feydom.si/cdn/shop/files/choice-1-svg-1_78646d76-ed94-4216-b47b-4c3c9e648461_1024x1024.svg'),linear-gradient(180deg,#f7f4ef,#efe9e0);background-repeat:no-repeat;background-size:60%,cover;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Configure CTA -->
+<section class="section configure-cta">
+  <div class="container">
+    <div class="configure-cta-card">
+      <img src="https://www.feydom.si/cdn/shop/files/Sestavi-si-po-svoje_app_2_6e1e9b2c-a95a-4b45-a7bb-99219335fa75.jpg" alt="Clooods configurator">
+      <div class="configure-cta-txt">
+        <h2>Configure your dream sofa.</h2>
+        <p>Choose modules, size, fabric and colour &ndash; perfectly matched to your living room. See your Clooods in 3D before you order.</p>
+        <a href="https://designer.feydom.si/" class="configure-cta-btn">Configure your sofa →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Awards (static) -->
+<section class="awards-static">
+  <div class="container">
+    <div class="awards-static-head">
+      <span class="eyebrow" style="text-align:center;">Awards</span>
+      <h2 class="serif" style="font-size:28px;font-weight:600;margin:8px 0 10px;">Clooods: recognised internationally 4 times</h2>
+      <p style="color:var(--gray);font-size:14.5px;">Independent juries have honoured Clooods with multiple international design awards.</p>
+    </div>
+    <div class="awards-static-grid">
+      <div class="award-item">
+        <img src="https://feydom-de.myshopify.com/cdn/shop/files/nagrada-7.svg" alt="German Innovation Award 2019">
+        <div class="name">German Innovation Award 2019</div>
+        <div class="status">WINNER</div>
+      </div>
+      <div class="award-item">
+        <img src="https://feydom-de.myshopify.com/cdn/shop/files/BigSee-Clooods-2020-1.png" alt="BIG SEE Product Design Award 2020">
+        <div class="name">BIG SEE Product Design Award 2020</div>
+        <div class="status">WINNER</div>
+      </div>
+      <div class="award-item">
+        <img src="https://feydom-de.myshopify.com/cdn/shop/files/nagrada-9_364bc4f3-8d53-42f7-a3dd-7a8ed788d6d6.svg" alt="German Design Award 2020">
+        <div class="name">German Design Award 2020</div>
+        <div class="status">WINNER</div>
+      </div>
+      <div class="award-item">
+        <img src="https://feydom-de.myshopify.com/cdn/shop/files/nagrada-8_ebd51afd-94d8-4029-a69a-38ce67cbb0a4.svg" alt="Iconic Awards 2019 Innovative Interior">
+        <div class="name">Iconic Awards 2019 Innovative Interior</div>
+        <div class="status">WINNER</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Der Unterschied: Vergleichstabelle -->
+<section class="section diff-section">
+  <div class="container">
+    <div class="diff-head">
+      <span class="eyebrow">— The Difference</span>
+      <h2 class="serif">A sofa that thinks ahead, not just stands there</h2>
+      <p>A regular sofa is at its best on the day you buy it. After that, it's all downhill. A modular FEYDOM sofa is just getting started.</p>
+    </div>
+    <div class="diff-table">
+      <div class="diff-row head">
+        <div class="diff-cat"></div>
+        <div class="diff-us">FEYDOM Modular Sofa</div>
+        <div class="diff-them">Regular Sofa</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cat"><span class="ic">◱</span> Shape</div>
+        <div class="diff-us">Corner sofa, bed, armchair — whatever the room needs</div>
+        <div class="diff-them">One fixed shape for one room</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cat"><span class="ic">🧼</span> Stains &amp; wear</div>
+        <div class="diff-us">Cover off, wash, good as new</div>
+        <div class="diff-them">The whole sofa looks worn out</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cat"><span class="ic">↻</span> When your life changes</div>
+        <div class="diff-us">You add or change one element</div>
+        <div class="diff-them">You need a new sofa</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cat"><span class="ic">🛏️</span> Guests &amp; overnight stays</div>
+        <div class="diff-us">Becomes a bed in seconds</div>
+        <div class="diff-them">Extra guest bed required</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cat"><span class="ic">♻️</span> In the long run</div>
+        <div class="diff-us">Individual parts get renewed, not replaced</div>
+        <div class="diff-them">Ends up at the curb eventually</div>
+      </div>
+    </div>
+    <p class="diff-tagline">Modular isn't just practical. It means your sofa thinks along with you, instead of working against you.</p>
+  </div>
+</section>
+
+<!-- Try it: Termin / Muster / Konfigurator -->
+<section class="section try-section">
+  <div class="container">
+    <div class="try-heading">
+      <span class="eyebrow">— Experience Clooods</span>
+      <h2 class="serif">Experience your <em>dream sofa</em> up close.</h2>
+    </div>
+    <div class="try-grid">
+      <div class="try-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/showroom-berlin-1.jpg');">
+        <div class="try-card-txt">
+          <span class="cat">Showroom</span>
+          <h3>Book an appointment</h3>
+          <p>Experience Clooods live in person or via video consultation &ndash; whatever suits you.</p>
+          <a href="feydom-homepage-concept.html#showrooms" class="try-card-btn">Choose a consultation →</a>
+        </div>
+      </div>
+      <div class="try-card" style="background-image:url('https://cdn.shopify.com/s/files/1/0724/0482/8322/files/feydom-salon-visit-pop-up.png');background-position:center 80%;">
+        <div class="try-card-txt">
+          <span class="cat">Free</span>
+          <h3>Order a sample box</h3>
+          <p>Order free Clooods fabric samples and test them in your own light.</p>
+          <a href="#" class="try-card-btn">Order samples →</a>
+        </div>
+      </div>
+      <div class="try-card" style="background-image:url('https://www.feydom.si/cdn/shop/files/Sestavi-si-po-svoje_app_2_6e1e9b2c-a95a-4b45-a7bb-99219335fa75.jpg');background-position:70% center;">
+        <div class="try-card-txt">
+          <span class="cat">Configurator</span>
+          <h3>Your sofa, your style</h3>
+          <p>Build Clooods in 3D &ndash; shape, fabric and colour, before you order.</p>
+          <a href="https://designer.feydom.si/" class="try-card-btn">Open configurator →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section class="section reviews-section">
+  <div class="container">
+    <div class="reviews-head">
+      <span class="eyebrow">— Real Voices</span>
+      <h2 class="serif">What our customers say</h2>
+      <p>33 verified reviews of Clooods. Unfiltered, from real living rooms.</p>
+    </div>
+    <div class="rating-summary">
+      <div class="big">
+        <div class="num">5.0</div>
+        <div class="stars">★★★★★</div>
+        <div class="count">33 reviews</div>
+      </div>
+      <div class="rating-bars">
+        <div class="bar-row"><span class="label">5★</span><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><span class="n">33</span></div>
+        <div class="bar-row"><span class="label">4★</span><div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div><span class="n">0</span></div>
+        <div class="bar-row"><span class="label">3★</span><div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div><span class="n">0</span></div>
+        <div class="bar-row"><span class="label">2★</span><div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div><span class="n">0</span></div>
+        <div class="bar-row"><span class="label">1★</span><div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div><span class="n">0</span></div>
+      </div>
+    </div>
+    <div class="filter-pills">
+      <span class="active">All (33)</span>
+      <span>5★ (33)</span>
+      <span>With photos (32)</span>
+    </div>
+    <div class="reviews-rail">
+      <div class="review-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/fyimg2_149483cd-b7df-41ed-907b-5d1dfbb3e079.jpg');">
+        <div class="rc-top">
+          <span class="stars">★★★★★</span>
+          <p>"I'm very happy with the sofa set. You also sleep really well with the extra mattress topper. It's exactly what I was looking for."</p>
+        </div>
+        <div class="rc-bottom">
+          <div class="name">Belkisa Z.</div>
+          <div class="meta"><span class="verified">✓ Verified purchase</span> · 15.01.2026</div>
+        </div>
+      </div>
+      <div class="review-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/fyimg3_5b60f2c5-7669-4d62-a196-3b5f7e2cc08d.jpg');">
+        <div class="rc-top">
+          <span class="stars">★★★★★</span>
+          <p>"We are absolutely thrilled with the sofa set. It's extremely comfortable, beautifully made, and gives our home a special sense of warmth and elegance."</p>
+        </div>
+        <div class="rc-bottom">
+          <div class="name">Fabio F.</div>
+          <div class="meta"><span class="verified">✓ Verified purchase</span> · 02.01.2026</div>
+        </div>
+      </div>
+      <div class="review-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/fyimg4_ce88e45d-f429-4d56-b361-70358b806311.jpg');">
+        <div class="rc-top">
+          <span class="stars">★★★★★</span>
+          <p>"The Clooods sofa is ideal for my apartment &ndash; soft and comfortable, but what I love most is the flexibility that lets the living room transform into a dining room."</p>
+        </div>
+        <div class="rc-bottom">
+          <div class="name">Eva M.</div>
+          <div class="meta"><span class="verified">✓ Verified purchase</span> · 06.01.2026</div>
+        </div>
+      </div>
+      <div class="review-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FEYDOM-modularne-sedezne-Clooods-Corner-Armchair-DE-92-middle-grey_9da1e381-77a6-44c8-bb85-fdc08e8dd92d.jpg');">
+        <div class="rc-top">
+          <span class="stars">★★★★★</span>
+          <p>"Exceptional material, doesn't fray, doesn't absorb liquid &ndash; and can be assembled and disassembled however you like. We highly recommend it."</p>
+        </div>
+        <div class="rc-bottom">
+          <div class="name">Metka K.</div>
+          <div class="meta"><span class="verified">✓ Verified purchase</span> · 23.12.2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-more"><a href="https://feydom-de.myshopify.com/products/clooods-17cm#reviews">View all reviews →</a></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section">
+  <div class="container">
+    <div class="faq-head">
+      <span class="eyebrow">— Still unsure?</span>
+      <h2 class="serif" style="font-size:30px;font-weight:600;">Questions everyone asks before buying.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>How do I know the sofa will fit my room?<span class="chev">▾</span></summary>
+        <p>You don't have to guess. You'll find the exact dimensions further up this page. Order free fabric samples, plan your sofa module by module in the configurator, or experience it live in one of our showrooms &ndash; so you decide with confidence, not hope.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I add or rearrange modules later?<span class="chev">▾</span></summary>
+        <p>Yes. Thanks to the special connection system, corners, armchairs and ottomans can be added or rearranged at any time &ndash; your Clooods grows along with your home.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can the sofa withstand kids and pets?<span class="chev">▾</span></summary>
+        <p>Yes. The covers are removable and washable, and the sturdy beechwood frame is built for everyday life &ndash; including kids, pets, and guests.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is it worth the investment?<span class="chev">▾</span></summary>
+        <p>Clooods is built modularly: instead of replacing the whole sofa, you only renew individual parts or covers &ndash; making it more cost-effective in the long run than a classic sofa.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if I'm not sure?<span class="chev">▾</span></summary>
+        <p>Order free fabric samples, book a free consultation, or visit one of our showrooms &ndash; we'll help you make the right decision.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Andere Clooods Modelle -->
+<section class="section other-models">
+  <div class="container">
+    <div class="other-models-head">
+      <span class="eyebrow">— Same system, different size</span>
+      <h2 class="serif" style="font-size:30px;font-weight:600;">Other Clooods Models</h2>
+      <p style="color:var(--gray);font-size:14.5px;">These models belong to the same modular family as Clooods &ndash; just in different sizes.</p>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel">
+        <div class="product-card">
+          <div class="img" style="background-image:url('https://cdn.shopify.com/s/files/1/0724/0482/8322/files/FEYDOM-modularna-U-sedezna-garnitura-Clooods-3S2-IC-59-1536x864.jpg');background-position:50% 55%;background-size:170%;">
+            <div class="badge-row"><span class="badge">4× award-winning</span></div>
+          </div>
+          <div class="body">
+            <h4>Clooods 3S2+</h4>
+            <div class="meta">247 × 156 cm · 5 people</div>
+            <div class="rating-line"><span class="stars">★★★★★</span> (33)</div>
+            <div class="price-row">From 2.772&nbsp;€</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="img" style="background-image:url('https://cdn.shopify.com/s/files/1/0724/0482/8322/files/FEYDOM-mehka-modularna-sedezna-garnitura-Clooods-4S-plus-ZI-83.jpg');background-position:center 55%;background-size:160%;">
+            <div class="badge-row"><span class="badge">With sleep function</span></div>
+          </div>
+          <div class="body">
+            <h4>Clooods 4S+</h4>
+            <div class="meta">312 × 156 cm · 5 people</div>
+            <div class="rating-line"><span class="stars">★★★★★</span> (33)</div>
+            <div class="price-row">From 2.955&nbsp;€</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="img" style="background-image:url('https://cdn.shopify.com/s/files/1/0899/9636/2024/files/feydom-modularni-dvosed-z-leziscem-clooods-2m-de-09-1536x864.jpg');background-position:45% 45%;background-size:190%;">
+            <div class="badge-row"><span class="badge">Compact</span></div>
+          </div>
+          <div class="body">
+            <h4>Clooods 2M</h4>
+            <div class="meta">182 × 91 cm · 2 people</div>
+            <div class="rating-line"><span class="stars">★★★★★</span> (33)</div>
+            <div class="price-row">From 1.384&nbsp;€</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="img" style="background-image:url('https://cdn.shopify.com/s/files/1/0899/9636/2024/files/feydom-modularni-trosed-z-leziscem-clooods-3s-et-11-1536x864_1_851df317-26f2-4381-a91d-4c5136941087.jpg');background-position:45% 45%;background-size:180%;">
+            <div class="badge-row"><span class="badge">With sleep function</span></div>
+          </div>
+          <div class="body">
+            <h4>Clooods 3S</h4>
+            <div class="meta">247 × 91 cm · 3 people</div>
+            <div class="rating-line"><span class="stars">★★★★★</span> (33)</div>
+            <div class="price-row">From 2.034&nbsp;€</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="other-models-more"><a href="https://feydom-de.myshopify.com/collections/clooods">View all Clooods models →</a></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">FEYDOM</div>
+        <p>Modular sofas, handmade in Europe. Designed for a life that's always changing.</p>
+      </div>
+      <div>
+        <h5>Products</h5>
+        <a href="feydom-homepage-concept.html#produkte">All sofas</a>
+        <a href="https://designer.feydom.si/">Sofa Configurator</a>
+        <a href="https://www.feydom.si/collections/prevleke-elementi">Order fabric samples</a>
+        <a href="feydom-homepage-concept.html#produkte">New arrivals</a>
+      </div>
+      <div>
+        <h5>Service</h5>
+        <a href="feydom-homepage-concept.html#showrooms">Showrooms</a>
+        <a href="feydom-homepage-concept.html#showrooms">Book an appointment</a>
+        <a href="#">Delivery &amp; Assembly</a>
+        <a href="#">Warranty</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <a href="feydom-homepage-concept.html">About FEYDOM</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Press</a>
+        <a href="#">Contact</a>
+      </div>
+      <div>
+        <h5>Newsletter</h5>
+        <p style="margin-bottom:14px;">€100 off your first order.</p>
+        <input type="email" placeholder="your@email.com" style="width:100%;padding:11px 14px;border-radius:8px;border:none;margin-bottom:10px;font-size:13px;">
+        <a href="#" class="btn btn-solid" style="padding:11px 18px;font-size:13px;">Subscribe</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 FEYDOM. All rights reserved.</span>
+      <div class="legal">
+        <a href="#">Legal Notice</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Right of Withdrawal</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="wa-float">💬</div>
+
+<!-- Sticky bottom bar -->
+<div class="sticky-bar">
+  <a href="feydom-homepage-concept.html#produkte">All sofas</a>
+  <a href="https://designer.feydom.si/">Sofa Configurator</a>
+  <a href="feydom-homepage-concept.html#showrooms">Showrooms</a>
+  <a href="#" class="cta">Book an appointment →</a>
+</div>
+
+<script>
+  const state = {config:'Clooods', material:'Allure', color:'Middle Grey', footcolor:'Light', footheight:'17 cm'};
+
+  function updateSummary(){
+    document.getElementById('configSummary').textContent =
+      `${state.config} · ${state.material} · ${state.color} · ${state.footcolor} (${state.footheight})`;
+  }
+
+  document.querySelectorAll('[data-part]').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const part = chip.dataset.part;
+      document.querySelectorAll(`[data-part="${part}"]`).forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      state[part] = chip.dataset.value;
+      if(part === 'color'){
+        document.getElementById('colorNote').innerHTML =
+          `DE-92: <strong>${chip.dataset.value}</strong>` + (chip.querySelector('.sale-tag') ? ' · <span class="flag">% Reduced price &amp; available immediately</span>' : '');
+      }
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll('.dims-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.dims-tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.dims-panel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Umbau slider: swap between real Clooods configurations
+  (function(){
+    const range = document.getElementById('umbauRange');
+    const img = document.getElementById('umbauImg');
+    const cap = document.getElementById('umbauCap');
+    if(!range) return;
+    const positions = [
+      {src:'https://feydom-de.myshopify.com/cdn/shop/files/clooods-svg-1_2efcf622-0505-4f1b-b80b-2fa4ccfbd9f3.svg', cap:'Corner sofa · 247 × 156 cm'},
+      {src:'https://feydom-de.myshopify.com/cdn/shop/files/Clooods-2m-svg_c946812b-817c-408b-9582-3c14c714a035.svg', cap:'Two-seater + armchair + ottoman'},
+      {src:'https://feydom-de.myshopify.com/cdn/shop/files/clooods-3s2-svg-1_8264ca1a-e0a5-49f8-8ef1-21c43232e0ef.svg', cap:'Double lounger · 156 × 182 cm'},
+      {src:'https://feydom-de.myshopify.com/cdn/shop/files/clooods-4sm-svg-1_dacfecc8-4992-4770-ac89-9b4e9b6b15f9.svg', cap:'Double lounger · 180 × 182 cm'}
+    ];
+    range.addEventListener('input', ()=>{
+      const p = positions[+range.value];
+      img.src = p.src;
+      cap.textContent = p.cap;
+    });
+  })();
+
+  // Practicality sticky-scroll: highlight active item as its panel comes into view
+  (function(){
+    const panels = document.querySelectorAll('.practicality-panel');
+    const listItems = document.querySelectorAll('.practicality-list li');
+    const descs = document.querySelectorAll('.practicality-desc');
+    if(!panels.length) return;
+    const setActive = (id)=>{
+      listItems.forEach(li=>li.classList.toggle('active', li.dataset.target===id));
+      descs.forEach(d=>{ d.style.display = (d.dataset.descFor===id) ? '' : 'none'; });
+    };
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { threshold: 0.55 });
+    panels.forEach(p=>io.observe(p));
+  })();
+</script>
+
+</body>
+</html>

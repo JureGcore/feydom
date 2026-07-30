@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farben und Materialien – FEYDOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#9c2b2b;
+    --red-dark:#7a1f1f;
+    --red-soft:#f2e2df;
+    --cream:#f7f4ef;
+    --offwhite:#fbfaf7;
+    --ink:#201c1a;
+    --gray:#726b64;
+    --gray-light:#a49c93;
+    --line:#e7e0d6;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:'Manrope',sans-serif;color:var(--ink);background:var(--offwhite);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;margin:0;padding:0;}
+  img{max-width:100%;display:block;}
+  .container{max-width:1320px;margin:0 auto;padding:0 40px;}
+  button{font-family:inherit;cursor:pointer;background:none;border:none;}
+  .section{padding:54px 0;}
+  .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:10px;display:block;}
+
+  /* ---------- Topbar / Header (shared) ---------- */
+  .topbar{background:var(--ink);color:#f1ece4;font-size:12.5px;letter-spacing:.02em;}
+  .topbar .container{display:flex;justify-content:space-between;align-items:center;padding:7px 40px;flex-wrap:wrap;gap:6px;}
+  .topbar span{opacity:.9}
+  .topbar .dot{margin:0 8px;opacity:.5}
+  header.main{position:sticky;top:0;z-index:50;background:rgba(251,250,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;font-size:23px;letter-spacing:.02em;}
+  .logo-img{height:42px;width:auto;display:block;}
+  .logo .mark{background:var(--red);color:#fff;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Manrope',sans-serif;font-weight:700;font-size:15px;}
+  nav.primary{display:flex;gap:34px;}
+  nav.primary a{font-size:14px;font-weight:500;color:var(--ink);padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s;}
+  nav.primary a:hover{border-color:var(--red);}
+  .nav-icons{display:flex;align-items:center;gap:20px;}
+  .nav-icons .icon{width:19px;height:19px;opacity:.85;}
+  .pill-cta{background:var(--ink);color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;}
+  .btn{padding:14px 28px;border-radius:100px;font-size:14px;font-weight:600;border:1px solid transparent;transition:all .2s;display:inline-block;}
+  .btn-solid{background:#fff;color:var(--ink);}
+  .btn-solid:hover{background:var(--red);color:#fff;}
+  .btn-outline{border:1px solid var(--line);color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .btn-red{background:var(--red);color:#fff;border-color:var(--red);}
+  .btn-red:hover{background:var(--red-dark);}
+
+  /* ---------- Breadcrumb ---------- */
+  .breadcrumb{padding:18px 0;border-bottom:1px solid var(--line);}
+  .breadcrumb a{font-size:13.5px;font-weight:600;color:var(--gray);display:inline-flex;align-items:center;gap:6px;}
+  .breadcrumb a:hover{color:var(--ink);}
+
+  /* ---------- Materials hero ---------- */
+  .materials-hero{padding:44px 0 10px;text-align:center;}
+  .materials-hero h1{font-size:42px;font-weight:600;margin:8px 0 14px;}
+  .materials-hero p{max-width:560px;margin:0 auto;color:var(--gray);font-size:15px;line-height:1.65;}
+
+  /* ---------- Lifestyle photo band ---------- */
+  .materials-photo-band{padding:30px 0 10px;}
+  .materials-photo-band .photo{
+    border-radius:20px;overflow:hidden;position:relative;min-height:360px;
+    background-size:cover;background-position:center;display:flex;align-items:flex-end;
+  }
+  .materials-photo-band .photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.62) 100%);}
+  .materials-photo-band .cap{position:relative;z-index:2;color:#fff;padding:30px 36px;font-family:'Fraunces',serif;font-size:22px;font-style:italic;max-width:520px;}
+
+  /* ---------- Material group ---------- */
+  .material-group{padding:46px 0;border-bottom:1px solid var(--line);}
+  .material-head{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap;margin-bottom:18px;}
+  .material-head h2{font-size:15px;font-weight:700;letter-spacing:.08em;margin:0;font-family:'Manrope',sans-serif;}
+  .material-head .more{font-size:13px;font-weight:600;text-decoration:underline;color:var(--ink);white-space:nowrap;}
+  .material-desc{max-width:700px;color:var(--gray);font-size:14.5px;line-height:1.65;margin:0 0 18px;}
+  .material-attrs{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--line);}
+  .material-attrs span{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);font-weight:500;}
+  .material-attrs .ic{font-size:16px;}
+
+  .swatch-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));gap:16px;}
+  .swatch-card{position:relative;border-radius:12px;overflow:hidden;height:190px;background-size:cover;background-position:center;isolation:isolate;}
+  .swatch-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.68) 100%);}
+  .swatch-card .info{position:relative;z-index:2;position:absolute;left:0;right:0;bottom:0;padding:12px 14px;color:#fff;}
+  .swatch-card .code{font-size:12.5px;font-weight:700;}
+  .swatch-card .name{font-size:11.5px;opacity:.9;margin-bottom:6px;}
+  .swatch-card .order{
+    display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;
+    text-transform:uppercase;letter-spacing:.03em;border:1px solid rgba(255,255,255,.6);border-radius:100px;
+    padding:4px 9px;
+  }
+  .swatch-card:hover .order{background:#fff;color:var(--ink);}
+
+  /* ---------- Bottom CTA (like livom "fünf kostenlose Muster") ---------- */
+  .materials-cta{padding:60px 0 70px;}
+  .materials-cta-card{
+    background:var(--cream);border-radius:24px;padding:20px;
+    display:flex;align-items:center;gap:44px;
+  }
+  .materials-cta-card img{width:44%;flex:0 0 44%;border-radius:16px;object-fit:cover;aspect-ratio:16/11;}
+  .materials-cta-txt{flex:1;}
+  .materials-cta-txt h2{font-size:30px;font-weight:700;margin:0 0 14px;color:var(--ink);font-family:'Manrope',sans-serif;}
+  .materials-cta-txt p{font-size:14.5px;line-height:1.6;color:var(--gray);margin:0 0 22px;max-width:440px;}
+  @media (max-width:800px){
+    .materials-cta-card{flex-direction:column;padding:16px;}
+    .materials-cta-card img{width:100%;flex:0 0 auto;}
+  }
+
+  /* ---------- Footer (shared) ---------- */
+  footer{background:var(--ink);color:#e8e2d8;padding:46px 0 22px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr;gap:32px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,.12);}
+  .footer-grid h5{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#a49c93;margin:0 0 14px;}
+  .footer-grid a{display:block;font-size:14px;color:#e8e2d8;margin-bottom:9px;opacity:.9;}
+  .footer-logo{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:14px;}
+  .footer-grid p{font-size:13.5px;color:#a49c93;line-height:1.6;}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;font-size:12.5px;color:#a49c93;flex-wrap:wrap;gap:10px;}
+  .footer-bottom .legal a{display:inline;margin-right:18px;color:#a49c93;}
+
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:60;
+    width:56px;height:56px;border-radius:50%;background:#25D366;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.25);
+    color:#fff;font-size:26px;
+  }
+  .sticky-bar{
+    position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:70;
+    display:flex;align-items:center;gap:2px;
+    background:rgba(236,233,244,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-radius:100px;padding:6px;box-shadow:0 14px 34px rgba(20,15,10,.18);
+  }
+  .sticky-bar a{padding:11px 18px;font-size:13.5px;font-weight:600;color:var(--ink);border-radius:100px;white-space:nowrap;transition:background .2s;}
+  .sticky-bar a:hover{background:rgba(255,255,255,.65);}
+  .sticky-bar a.cta{background:var(--ink);color:#fff;display:flex;align-items:center;gap:6px;}
+  .sticky-bar a.cta:hover{background:var(--red);}
+
+  @media (max-width:900px){
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    nav.primary,.nav-icons .pill-cta{display:none;}
+    .material-attrs{gap:16px;}
+  }
+  @media (max-width:700px){
+    .sticky-bar{max-width:94vw;overflow-x:auto;scrollbar-width:none;padding:6px 8px;}
+    .sticky-bar::-webkit-scrollbar{display:none;}
+    .sticky-bar a{padding:9px 14px;font-size:12.5px;}
+    .swatch-grid{grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span>📍 7 Showrooms in Deutschland <span class="dot">·</span> Kostenlose Beratung vor Ort</span>
+    <span>Kostenloser Versand ab 500&nbsp;€ <span class="dot">·</span> Bis zu 5 Jahre Garantie</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="main">
+  <div class="nav-row">
+    <a href="feydom-homepage-concept.html" class="logo"><img src="https://www.feydom.si/cdn/shop/files/feydom-logo.jpg" alt="FEYDOM" class="logo-img"></a>
+    <nav class="primary">
+      <a href="feydom-homepage-concept.html#produkte">Sofas</a>
+      <a href="https://designer.feydom.si/">Sofa-Konfigurator</a>
+      <a href="feydom-homepage-concept.html#showrooms">Showrooms</a>
+      <a href="farben-und-materialien.html">Stoffmuster</a>
+      <a href="feydom-homepage-concept.html">FAQ</a>
+    </nav>
+    <div class="nav-icons">
+      <span class="icon">🔍</span>
+      <span class="icon">♡</span>
+      <span class="icon">👤</span>
+      <span class="icon">🛍</span>
+      <a href="feydom-homepage-concept.html#showrooms" class="pill-cta">Termin buchen →</a>
+    </div>
+  </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <div class="container">
+    <a href="feydom-homepage-concept.html">← Zurück zur Startseite</a>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="materials-hero">
+  <div class="container">
+    <span class="eyebrow">Farben und Materialien</span>
+    <h1 class="serif">Muster bestellen</h1>
+    <p>Wähle dein Material und erhalte dein Muster nach Hause &ndash; du kannst maximal 5 kostenlose Muster bestellen.</p>
+  </div>
+</section>
+
+<!-- Lifestyle photo band -->
+<section class="section materials-photo-band">
+  <div class="container">
+    <div class="photo" style="background-image:url('https://www.feydom.si/cdn/shop/files/Prevleka-za-DD1-FF-18.jpg');">
+      <div class="cap">„Fühlen, sehen, vergleichen &ndash; entdecke deinen Lieblingsstoff bequem zu Hause.“</div>
+    </div>
+  </div>
+</section>
+
+<!-- ASTRA -->
+<section class="section material-group">
+  <div class="container">
+    <div class="material-head">
+      <h2>ASTRA</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-astra" target="_blank">Mehr über Astra →</a>
+    </div>
+    <p class="material-desc">Astra ist ein dicht gewebter Stoff mit einer weichen und eleganten Textur, ähnlich unserem bekannten Icon-Stoff. Astra bietet einen minimalistischen Look in einfarbigen Tönen mit sanften Variationen einer Farbe &ndash; die perfekte Wahl für moderne Innenräume.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🤍</span> Angenehm</span>
+      <span><span class="ic">🏠</span> Komfortables Aussehen</span>
+      <span><span class="ic">🧵</span> Martindale: 35.000</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Astra_Light_Grey_AT-80-min_ec390949-c347-4175-b9a7-295aa2daa132_1024x1024.png');">
+        <div class="info"><div class="code">AT-80</div><div class="name">Light Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Astra_Dark_Grey_AT-88-min_d0b32edb-10a4-4a01-8b15-652745f518a5_1024x1024.png');">
+        <div class="info"><div class="code">AT-88</div><div class="name">Dark Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALLURE -->
+<section class="section material-group">
+  <div class="container">
+    <div class="material-head">
+      <h2>ALLURE</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-alure" target="_blank">Mehr über Allure →</a>
+    </div>
+    <p class="material-desc">Allure wirkt wie ein dickeres Strickmaterial und erzeugt einen glänzenden Effekt. Dieser entsteht durch das Zusammenspiel zweier Fadenfarben in seiner Struktur &ndash; einer Grundfarbe und Weiß.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🤍</span> Angenehm</span>
+      <span><span class="ic">🏠</span> Komfortables Aussehen</span>
+      <span><span class="ic">🧵</span> Martindale: 40.000</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/DE-09_1024x1024.jpg');">
+        <div class="info"><div class="code">DE-09</div><div class="name">Natur</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/DE-48_dc0aeb92-d94d-4c1f-8de4-bc51cd9ab51b_1024x1024.jpg');">
+        <div class="info"><div class="code">DE-48</div><div class="name">Yellow</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/DE-75_1024x1024.jpg');">
+        <div class="info"><div class="code">DE-75</div><div class="name">Pastel Blue</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/DE-92_03330cb1-928d-42c3-86ea-eed0dcff0922_1024x1024.jpg');">
+        <div class="info"><div class="code">DE-92</div><div class="name">Middle Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALIDAD -->
+<section class="section material-group">
+  <div class="container">
+    <div class="material-head">
+      <h2>CALIDAD</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-calidad" target="_blank">Mehr über Calidad →</a>
+    </div>
+    <p class="material-desc">Calidad ähnelt in seiner Qualität Kunstleder. Der Stoff ist mit einer speziellen Schutzbeschichtung überzogen, die eine wasserabweisende Schicht bildet und ein schnelles Eindringen von Flüssigkeit verhindert. Calidad ist ausschließlich für Bard erhältlich.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🤍</span> Angenehm</span>
+      <span><span class="ic">👁</span> Angenehmes Aussehen</span>
+      <span><span class="ic">🧵</span> Martindale: 45.000</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Calidad-Corner-CA-13_1024x1024.jpg');">
+        <div class="info"><div class="code">CA-13</div><div class="name">Cappuccino</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Calidad-Corner-CA-20_1024x1024.jpg');">
+        <div class="info"><div class="code">CA-20</div><div class="name">Brown</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAHLIA -->
+<section class="section material-group">
+  <div class="container">
+    <div class="material-head">
+      <h2>DAHLIA</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-dahlia" target="_blank">Mehr über Dahlia →</a>
+    </div>
+    <p class="material-desc">Dahlia ist ein elegantes, weiches und luxuriöses Material. Du kannst aus zehn wunderschönen Farbtönen wählen. Dahlia ist ausschließlich für Bard erhältlich.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🤍</span> Angenehm</span>
+      <span><span class="ic">👁</span> Angenehmes Aussehen</span>
+      <span><span class="ic">🧵</span> Martindale: 100.000</span>
+      <span><span class="ic">🛡</span> Beständig</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Ivory-DA-01-min-scaled_ab68384e-afef-44dd-ab04-8fcab15799ad_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-01</div><div class="name">Ivory</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Black-Caviar-DA-100-scaled_5d08c952-e9f9-4fdc-8926-256f51cef62e_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-100</div><div class="name">Black Caviar</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Emerald-Green-DA-39-scaled_8e588d71-0e75-40b6-8bb3-fac206011e4a_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-39</div><div class="name">Emerald Green</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Terracotta-DA-52-min-scaled_48996709-4148-4a27-ba9a-5935db00a1f7_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-52</div><div class="name">Terracotta</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Rosie-Pink-DA-61-min-scaled_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-61</div><div class="name">Rosie Pink</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Moonstone-DA-72-min-scaled_4023151b-da6c-4197-9a07-5ad7ae826f4f_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-72</div><div class="name">Moonstone</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Eternal-Blue-DA-75-scaled_0113782d-9509-47bf-a78f-f4c2e9ddf395_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-75</div><div class="name">Eternal Blue</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Pearl-DA-83-min-scaled_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-83</div><div class="name">Pearl</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Platinum-DA-86-min-scaled_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-86</div><div class="name">Platinum</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/Midnight-Grey-DA-90-min-scaled_1024x1024.jpg');">
+        <div class="info"><div class="code">DA-90</div><div class="name">Midnight Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ICON -->
+<section class="section material-group">
+  <div class="container">
+    <div class="material-head">
+      <h2>ICON</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-icon" target="_blank">Mehr über Icon →</a>
+    </div>
+    <p class="material-desc">Die Icon-Bezüge haben eine Flechtoptik, die durch die Kombination zweier Farben ein gemütliches Aussehen schafft. Sie sind sehr weich und angenehm und verfügen über eine Nanopartikel-Beschichtung, die verhindert, dass Flüssigkeiten aufgenommen werden.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🤍</span> Angenehm</span>
+      <span><span class="ic">🧵</span> Martindale: 45.000</span>
+      <span><span class="ic">🛡</span> Beständig</span>
+      <span><span class="ic">💧</span> Einfache Reinigung</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/IC-02_1024x1024.jpg');">
+        <div class="info"><div class="code">IC-02</div><div class="name">Natur</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/IC-06_85916ad1-f124-4109-b04d-f322f2bae7c4_1024x1024.jpg');">
+        <div class="info"><div class="code">IC-06</div><div class="name">Cappuccino</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/IC-39_1024x1024.jpg');">
+        <div class="info"><div class="code">IC-39</div><div class="name">Forest</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/IC-45_1024x1024.jpg');">
+        <div class="info"><div class="code">IC-45</div><div class="name">Antic Gold</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/IC-69_d6f9f7f3-8442-4ad3-b965-4c22fc896655_1024x1024.jpg');">
+        <div class="info"><div class="code">IC-69</div><div class="name">Marmo</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/IC-79_1024x1024.jpg');">
+        <div class="info"><div class="code">IC-79</div><div class="name">Deep Blue</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/IC-99_3786bdb6-3344-4523-be71-1673d0d104b7_1024x1024.jpg');">
+        <div class="info"><div class="code">IC-99</div><div class="name">Umbra</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOLLIA -->
+<section class="section material-group">
+  <div class="container">
+    <div class="material-head">
+      <h2>MOLLIA</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-mollia" target="_blank">Mehr über Mollia →</a>
+    </div>
+    <p class="material-desc">Mollia-Bezüge bestehen aus Mikrofaser, die sich ohne den Einsatz von Chemikalien leicht reinigen lässt. Ideal für stark beanspruchte Möbel, die häufig durch Speisen, Getränke, Kinder und Tiere beansprucht werden.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🧵</span> Martindale: 25.000</span>
+      <span><span class="ic">💧</span> Einfache Reinigung</span>
+      <span><span class="ic">🐾</span> Haustierfreundlich</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/HC-03_97a30b49-956d-4de2-bc3d-bb131dacc8d9_1024x1024.jpg');">
+        <div class="info"><div class="code">HC-03</div><div class="name">Honey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/HC-04_8849b545-12b4-4a5e-8bcf-b5b727399b25_1024x1024.jpg');">
+        <div class="info"><div class="code">HC-04</div><div class="name">White</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/HC-09_1024x1024.jpg');">
+        <div class="info"><div class="code">HC-09</div><div class="name">Grass Green</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-12_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-12</div><div class="name">Dark Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-13_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-13</div><div class="name">Cappuccino</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-14_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-14</div><div class="name">Middle Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-16_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-16</div><div class="name">Yellow</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-17_1d558941-8ab9-4cd6-b3a4-150e2ae78f4e_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-17</div><div class="name">Lavander</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-18_d1850671-bb26-480d-8052-882107d85d88_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-18</div><div class="name">Mint</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-19_ca54d939-4083-49e4-8d69-8774ac58026c_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-19</div><div class="name">Pastel Blue</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FF-20_1024x1024.jpg');">
+        <div class="info"><div class="code">FF-20</div><div class="name">Turquoise</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOENIX -->
+<section class="section material-group">
+  <div class="container">
+    <div class="material-head">
+      <h2>PHOENIX</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-phoenix" target="_blank">Mehr über Phoenix →</a>
+    </div>
+    <p class="material-desc">Das Phoenix-Material besteht zu 90&nbsp;% aus recyceltem Polyester, das aus recycelten Flaschen gewonnen wird. Der Herstellungsprozess zielt auf einen Null-Material- und Energieverbrauch ab und hinterlässt keine Spuren in der Umwelt.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🧵</span> Martindale: 30.000</span>
+      <span><span class="ic">♻️</span> Recycelter Kunststoff</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FE-84_1024x1024.jpg');">
+        <div class="info"><div class="code">FE-84</div><div class="name">Middle Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/FE-92_fed78878-6870-46fb-b2a3-8909b1990e6a_1024x1024.jpg');">
+        <div class="info"><div class="code">FE-92</div><div class="name">Dark Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VELARE -->
+<section class="section material-group" style="border-bottom:none;">
+  <div class="container">
+    <div class="material-head">
+      <h2>VELARE</h2>
+      <a class="more" href="https://feydom-de.myshopify.com/pages/stoff-velare" target="_blank">Mehr über Velare →</a>
+    </div>
+    <p class="material-desc">Aufgrund seiner Struktur bietet Velare eine hohe Abriebfestigkeit und erzeugt ein einheitliches Farbgefühl. Das Material ist auch für größere Haustiere geeignet, die gerne auf das Sofa springen, aber keine scharfen Krallen haben.</p>
+    <div class="material-attrs">
+      <span><span class="ic">🧵</span> Martindale: 100.000</span>
+      <span><span class="ic">🛡</span> Beständig</span>
+      <span><span class="ic">🐾</span> Haustierfreundlich</span>
+      <span><span class="ic">🎨</span> Große Farbauswahl</span>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-11-40_4bf6ff42-cec4-480b-9aed-2bfe768383e5_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-11</div><div class="name">Red</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-12_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-12</div><div class="name">Dark Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-14_08aef64d-a2ac-43a0-ba54-e206fd55e2ef_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-14</div><div class="name">Middle Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-15_ebd3b386-c1a0-4411-8e5f-6b8610299917_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-15</div><div class="name">Light Grey</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-16_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-16</div><div class="name">Turquoise</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-24_45dba80f-e5ab-4617-befb-8d1ab1122dc5_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-24</div><div class="name">Cappuccino</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-27_aa8a2543-ff44-4010-b8e1-b57effb326b4_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-27</div><div class="name">Chocolate</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-38_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-38</div><div class="name">Pine</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-48_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-48</div><div class="name">Antic Gold</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-80_bfcce56b-24db-4b83-8919-1c1acce071a2_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-80</div><div class="name">Noble Blue</div><span class="order">Muster bestellen</span></div>
+      </div>
+      <div class="swatch-card" style="background-image:url('https://feydom-de.myshopify.com/cdn/shop/files/ET-99_1024x1024.jpg');">
+        <div class="info"><div class="code">ET-99</div><div class="name">Latte</div><span class="order">Muster bestellen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="section materials-cta">
+  <div class="container">
+    <div class="materials-cta-card">
+      <img src="https://cdn.shopify.com/s/files/1/0724/0482/8322/files/feydom-salon-visit-pop-up.png" alt="FEYDOM Stoffmuster fühlen">
+      <div class="materials-cta-txt">
+        <h2>Fünf kostenlose Stoffmuster.</h2>
+        <p>Wähle dein Material und erhalte dein Muster nach Hause &ndash; völlig kostenfrei. Du kannst maximal 5 Muster gleichzeitig bestellen.</p>
+        <a href="https://www.feydom.si/collections/prevleke-elementi" class="btn btn-red">Muster jetzt bestellen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">FEYDOM</div>
+        <p>Modulare Sofas, handgefertigt in Europa. Entwickelt für ein Leben, das sich ständig verändert.</p>
+      </div>
+      <div>
+        <h5>Produkte</h5>
+        <a href="feydom-homepage-concept.html#produkte">Alle Sofas</a>
+        <a href="https://designer.feydom.si/">Sofa-Konfigurator</a>
+        <a href="farben-und-materialien.html">Stoffmuster bestellen</a>
+        <a href="feydom-homepage-concept.html#produkte">Neuheiten</a>
+      </div>
+      <div>
+        <h5>Service</h5>
+        <a href="feydom-homepage-concept.html#showrooms">Showrooms</a>
+        <a href="feydom-homepage-concept.html#showrooms">Termin buchen</a>
+        <a href="#">Lieferung &amp; Montage</a>
+        <a href="#">Garantie</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div>
+        <h5>Unternehmen</h5>
+        <a href="feydom-homepage-concept.html">Über FEYDOM</a>
+        <a href="#">Nachhaltigkeit</a>
+        <a href="#">Presse</a>
+        <a href="#">Kontakt</a>
+      </div>
+      <div>
+        <h5>Newsletter</h5>
+        <p style="margin-bottom:14px;">100&nbsp;€ Rabatt auf deine erste Bestellung.</p>
+        <input type="email" placeholder="deine@email.de" style="width:100%;padding:11px 14px;border-radius:8px;border:none;margin-bottom:10px;font-size:13px;">
+        <a href="#" class="btn btn-solid" style="padding:11px 18px;font-size:13px;">Abonnieren</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 FEYDOM. Alle Rechte vorbehalten.</span>
+      <div class="legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+        <a href="#">AGB</a>
+        <a href="#">Widerruf</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="wa-float">💬</div>
+
+<!-- Sticky bottom bar -->
+<div class="sticky-bar">
+  <a href="feydom-homepage-concept.html#produkte">Alle Sofas</a>
+  <a href="https://designer.feydom.si/">Sofa-Konfigurator</a>
+  <a href="feydom-homepage-concept.html#showrooms">Showrooms</a>
+  <a href="feydom-homepage-concept.html#showrooms" class="cta">Termin vereinbaren →</a>
+</div>
+
+</body>
+</html>
