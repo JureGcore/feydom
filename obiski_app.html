@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Obiski</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f7f7;
+    --card: #ffffff;
+    --card-alt: #f6f4f1;
+    --primary: #a21318;
+    --primary-dark: #7c0f13;
+    --ink: #171512;
+    --text: #171512;
+    --muted: #7a746e;
+    --border: #e6e2dd;
+    --danger: #a21318;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; min-height: 100%;
+    background: var(--bg);
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text);
+    -webkit-tap-highlight-color: transparent;
+  }
+  #app {
+    max-width: 780px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 18px 28px;
+  }
+  .progress {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  .progress-dot {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+  }
+  .progress-dot.done { background: var(--primary); }
+  .progress-dot.current { background: var(--primary); opacity: 0.45; }
+
+  .page-title {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 2px 0 2px;
+    color: var(--ink);
+  }
+  .page-sub {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .question-block {
+    margin-bottom: 26px;
+  }
+  .question-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .question-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .required-mark {
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .question-block.error .opt-btn {
+    border-color: var(--primary);
+  }
+  .field-error {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .options.single-col { grid-template-columns: 1fr; }
+
+  .opt-btn {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 12px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    min-height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: transform 0.06s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    line-height: 1.3;
+  }
+  .opt-btn .sub {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .opt-btn.selected .sub { color: rgba(255,255,255,0.75); }
+  .opt-btn:active { transform: scale(0.97); }
+  .opt-btn.selected {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .other-input, .text-input, .textarea-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    margin-top: 8px;
+    background: var(--card);
+    color: var(--ink);
+  }
+  .other-input:focus, .text-input:focus, .textarea-input:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+  .textarea-input { min-height: 90px; resize: vertical; }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 18px;
+    gap: 10px;
+    position: sticky;
+    bottom: 0;
+    background: var(--bg);
+  }
+  .nav-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 16px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+  }
+  .nav-btn.back {
+    background: transparent;
+    color: var(--muted);
+    padding-left: 6px;
+  }
+  .nav-btn.forward {
+    background: var(--primary);
+    color: #fff;
+    flex: 1;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+  .nav-btn.forward:active { background: var(--primary-dark); }
+
+  .status-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .status-screen .icon { font-size: 52px; }
+  .status-screen .msg {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .status-screen .sub-text { font-size: 14px; color: var(--muted); }
+  .again-btn {
+    margin-top: 10px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .retry-btn {
+    margin-top: 10px;
+    background: var(--danger);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+
+  .config-banner {
+    background: #fbeceb;
+    border: 1px solid #f0c9c7;
+    color: var(--primary-dark);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ====================== NASTAVITEV ======================
+   Sem prilepi Web app URL, ki ga dobiš pri Google Apps Script
+   deployu (Deploy -> New deployment -> Web app). Konča se na /exec
+   ========================================================= */
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzGH0qSFfDGXTSJ9EtTCkZq9qKmfyPYXv_etKCj3f_zIhxtj0K9QRte3o5v-mYj1H34/exec";
+
+// ====================== STRUKTURA STRANI ======================
+const PAGES = [
+  {
+    title: "Stranka",
+    questions: [
+      { key: "prvicPovratna", type: "single", label: "Ali je stranka pri nas prvič?",
+        options: ["Da, prvič", "Ne, pri nas je že bila"] },
+      { key: "kdajNazadnje", type: "single", label: "Kdaj nas je nazadnje obiskala?",
+        options: ["V zadnjih 7 dneh", "Pred 8 do 30 dnevi", "Pred 1 do 6 meseci", "Pred 6 do 12 meseci", "Pred več kot enim letom"],
+        showIf: a => a.prvicPovratna === "Ne, pri nas je že bila" },
+      { key: "imaSedezno", type: "single", label: "Ali že ima FEYDOM sedežno?",
+        options: ["Da", "Ne", "Ni znano"] }
+    ]
+  },
+  {
+    title: "Kontekst obiska",
+    questions: [
+      { key: "vir", type: "single", label: "Kako je stranka izvedela za FEYDOM?", allowOther: true,
+        otherPlaceholder: "Vpiši, kako je izvedela za nas",
+        options: ["Bila je v BTC-ju in opazila salon", "Spletni oglas (Google ali družbena omrežja)",
+          "Oglas v reviji, na radiu ali letaku", "Sejem ali dogodek", "Prek influencerja",
+          "Sama nas je našla prek spletnega iskanja", "Priporočilo", "Drugo"] },
+      { key: "namen", type: "single-sub", label: "Kako blizu nakupu je stranka?",
+        options: [
+          { value: "Naključen obisk", sub: "bila je v BTC-ju in opazila salon" },
+          { value: "Prvo raziskovanje", sub: "sedežne jo zanimajo, vendar še nima konkretnega načrta za nakup" },
+          { value: "Razmišlja o nakupu", sub: "okvirno v naslednjih 1 do 6 mesecih" },
+          { value: "Aktivno izbira", sub: "primerja konkretne modele in je blizu končne odločitve" },
+          { value: "Pripravljena na nakup", sub: "nakup načrtuje v naslednjih 30 dneh" }
+        ] }
+    ]
+  },
+  {
+    title: "Zanimanje",
+    questions: [
+      { key: "model", type: "single", label: "Kateri model jo zanima?",
+        options: ["Oiko", "Matacao 3", "BonBon 3", "Bard", "Cascais", "Diagon", "Clooods", "Choice", "Q6", "Še ni izbrala"] },
+      { key: "cenovniRazred", type: "single", label: "Kakšen budget ima za sedežno?",
+        options: ["Do 1.000 €", "1.000 do 2.000 €", "2.000 do 3.000 €", "Več kot 3.000 €", "Ni znano"] },
+      { key: "pomembno", type: "multi", label: "Kaj ji je pri sedežni pomembno?", hint: "Izbereš lahko več odgovorov.",
+        allowOther: true, otherPlaceholder: "Vpiši, kaj ji je še pomembno",
+        options: ["Modularnost", "Snemljive in pralne prevleke", "Kakovost in dolga življenjska doba",
+          "Cena ali obročno plačilo", "Dizajn in videz", "Možnost ureditve ležišča", "Prostor za shranjevanje",
+          "Izbira barv in tkanin", "Hitra dobava", "Dovolj prostora za robotski sesalnik",
+          "Izdelava v EU in trajnost", "Drugo"] },
+      { key: "tkanina", type: "multi", label: "Katere tkanine jo zanimajo?", hint: "Izbereš lahko več odgovorov.",
+        options: ["Astra", "Alure", "Calidad", "Dahlia", "Heim", "Icon", "Hygge", "Mollia", "Phoenix", "Velare", "Ni znano"] },
+      { key: "tkaninaZakaj", type: "multi", label: "Kaj ji je pomembno pri izbiri materiala?", hint: "Izbereš lahko več odgovorov.",
+        allowOther: true, otherPlaceholder: "Vpiši razlog",
+        options: ["Barva", "Primernost za dom s hišnimi ljubljenčki", "Trpežnost",
+          "Mehkoba in otip", "Enostavno čiščenje", "Ekološki material", "Cena", "Drugo"] }
+    ]
+  },
+  {
+    title: "Demografija",
+    questions: [
+      { key: "tipStranke", type: "single", label: "Kdo je obiskal salon?",
+        options: ["Moški", "Ženska", "Par", "Družina"] },
+      { key: "starost", type: "single", label: "Kakšna je ocenjena starost glavnega kupca?",
+        options: ["Do 25 let", "26 do 39 let", "40 do 55 let", "56 let ali več", "Ni mogoče oceniti"] },
+      { key: "ljubljencki", type: "single", label: "Ali imajo doma hišne ljubljenčke?",
+        options: ["Da", "Ne", "Ni znano"] },
+      { key: "ljubljenckiTip", type: "single", label: "Katere hišne ljubljenčke imajo?",
+        options: ["Psa", "Mačko", "Drugo"], showIf: a => a.ljubljencki === "Da" },
+      { key: "otrociSkakanje", type: "single", label: "Ali bodo sedežno uporabljali tudi otroci?",
+        options: ["Da", "Ne", "Ni znano"] },
+      { key: "bivalisce", type: "single", label: "V kakšnem bivališču živijo?",
+        options: ["Hiša", "Stanovanje", "Drugo", "Ni znano"] },
+      { key: "selitev", type: "single", label: "Ali se nameravajo v kratkem preseliti ali prenavljati?",
+        options: ["Da", "Ne", "Ni znano"] },
+      { key: "regija", type: "single", label: "Od kod prihajajo?",
+        options: ["Ljubljana z okolico", "Gorenjska", "Dolenjska", "Notranjska", "Štajerska", "Koroška", "Prekmurje", "Primorska"] }
+    ]
+  },
+  {
+    title: "Zaključek obiska",
+    questions: [
+      { key: "ponudba", type: "single", label: "Ali smo stranki pripravili ponudbo?",
+        options: ["Da", "Ne"] },
+      { key: "ponudbaStevilka", type: "text", label: "Številka ponudbe", placeholder: "Vpiši številko ponudbe",
+        showIf: a => a.ponudba === "Da" },
+      { key: "vzorcek", type: "single", label: "Ali je stranka vzela brezplačen vzorec tkanine?",
+        options: ["Da", "Ne"] },
+      { key: "vzorcekStevilka", type: "text", label: "Številka naročila vzorcev", placeholder: "Vpiši številko naročila",
+        showIf: a => a.vzorcek === "Da" },
+      { key: "kontakt", type: "single", label: "Ali ste pridobili njene kontaktne podatke?",
+        options: ["Da", "Ne"] },
+      { key: "kontaktPodatki", type: "text", label: "Prosim vnesite podatke", placeholder: "Email in/ali telefon",
+        showIf: a => a.kontakt === "Da" },
+      { key: "kdoZabelezil", type: "text", label: "Kdo je zabeležil obisk?", hint: "Prosim vnesi svoje ime",
+        placeholder: "Ime priimek" },
+      { key: "ostalo", type: "textarea", label: "Opombe", required: false,
+        placeholder: "Dodaj vse, kar bi lahko bilo pomembno pri nadaljnjem stiku." }
+    ]
+  }
+];
+
+let answers = {};
+let otherText = {}; // custom "Drugo" text, keyed by question key
+let currentPage = 0;
+let view = "form"; // form | saving | success | error
+let errors = {}; // question key -> true, questions that failed validation
+
+function scrollTop() {
+  window.scrollTo(0, 0);
+}
+
+function resetAll() {
+  answers = {};
+  otherText = {};
+  errors = {};
+  currentPage = 0;
+  view = "form";
+  render();
+  scrollTop();
+}
+
+function visibleQuestions(page) {
+  return page.questions.filter(q => !q.showIf || q.showIf(answers));
+}
+
+// Vprašanja, ki se ne prikažejo pogojno (nimajo showIf), so obvezna,
+// razen če je izrecno označeno z required: false (npr. Opombe).
+function isRequired(q) {
+  return !q.showIf && q.required !== false;
+}
+
+function isAnswered(q) {
+  if (q.type === "multi") return !!(answers[q.key] && answers[q.key].length > 0);
+  const v = answers[q.key];
+  return v !== undefined && v !== null && String(v).trim() !== "";
+}
+
+function selectSingle(q, value) {
+  answers[q.key] = value;
+  delete errors[q.key];
+  render();
+}
+
+function toggleMulti(q, value) {
+  const arr = answers[q.key] ? answers[q.key].slice() : [];
+  const idx = arr.indexOf(value);
+  if (idx >= 0) arr.splice(idx, 1);
+  else arr.push(value);
+  answers[q.key] = arr;
+  if (arr.length > 0) delete errors[q.key];
+  render();
+}
+
+function isOtherActive(q) {
+  if (q.type === "multi") return answers[q.key] && answers[q.key].includes("Drugo");
+  return answers[q.key] === "Drugo";
+}
+
+function goNext() {
+  const page = PAGES[currentPage];
+  const missing = visibleQuestions(page).filter(q => isRequired(q) && !isAnswered(q));
+  if (missing.length > 0) {
+    errors = {};
+    missing.forEach(q => { errors[q.key] = true; });
+    render();
+    const firstBad = document.querySelector(".question-block.error");
+    if (firstBad && firstBad.scrollIntoView) {
+      try { firstBad.scrollIntoView({ block: "center" }); } catch (e) {}
+    }
+    return;
+  }
+  errors = {};
+  if (currentPage < PAGES.length - 1) {
+    currentPage++;
+    render();
+    scrollTop();
+  } else {
+    saveVisit();
+  }
+}
+
+function goBack() {
+  if (currentPage > 0) {
+    errors = {};
+    currentPage--;
+    render();
+    scrollTop();
+  }
+}
+
+function buildPayload() {
+  const payload = {};
+  PAGES.forEach(page => {
+    page.questions.forEach(q => {
+      if (q.showIf && !q.showIf(answers)) return;
+      let val = answers[q.key];
+      if (q.type === "multi") {
+        val = (val || []).map(v => {
+          if (v === "Drugo") return "Drugo: " + (otherText[q.key] || "");
+          return v;
+        });
+        payload[q.key] = val.join(", ");
+      } else if (q.type === "single" || q.type === "single-sub") {
+        if (val === "Drugo") {
+          payload[q.key] = "Drugo: " + (otherText[q.key] || "");
+        } else {
+          payload[q.key] = val || "";
+        }
+      } else {
+        payload[q.key] = val || "";
+      }
+    });
+  });
+  return payload;
+}
+
+async function saveVisit() {
+  view = "saving";
+  render();
+  scrollTop();
+  try {
+    if (!WEB_APP_URL || WEB_APP_URL.indexOf("PASTE_YOUR") === 0) {
+      throw new Error("WEB_APP_URL ni nastavljen v kodi.");
+    }
+    await fetch(WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(buildPayload())
+    });
+    view = "success";
+  } catch (err) {
+    view = "error";
+    console.error(err);
+  }
+  render();
+}
+
+function el(tag, attrs, children) {
+  const e = document.createElement(tag);
+  if (attrs) {
+    for (const k in attrs) {
+      if (k === "class") e.className = attrs[k];
+      else if (k === "onclick") e.addEventListener("click", attrs[k]);
+      else if (k === "oninput") e.addEventListener("input", attrs[k]);
+      else e.setAttribute(k, attrs[k]);
+    }
+  }
+  (children || []).forEach(c => {
+    if (typeof c === "string") e.appendChild(document.createTextNode(c));
+    else if (c) e.appendChild(c);
+  });
+  return e;
+}
+
+function renderProgress() {
+  const wrap = el("div", { class: "progress" });
+  PAGES.forEach((p, i) => {
+    const dot = el("div", { class: "progress-dot" + (i < currentPage ? " done" : i === currentPage ? " current" : "") });
+    wrap.appendChild(dot);
+  });
+  return wrap;
+}
+
+function renderOtherInput(q) {
+  return el("input", {
+    class: "other-input",
+    type: "text",
+    placeholder: q.otherPlaceholder || "Vpiši ...",
+    value: otherText[q.key] || "",
+    oninput: (e) => { otherText[q.key] = e.target.value; }
+  });
+}
+
+function renderQuestion(q) {
+  const block = el("div", { class: "question-block" + (errors[q.key] ? " error" : "") });
+  const labelChildren = [q.label];
+  if (isRequired(q)) labelChildren.push(el("span", { class: "required-mark" }, [" *"]));
+  block.appendChild(el("div", { class: "question-label" }, labelChildren));
+  if (q.hint) block.appendChild(el("div", { class: "question-hint" }, [q.hint]));
+
+  if (q.type === "single") {
+    const grid = el("div", { class: "options" + (q.singleCol ? " single-col" : "") });
+    q.options.forEach(opt => {
+      const selected = answers[q.key] === opt;
+      grid.appendChild(el("button", {
+        class: "opt-btn" + (selected ? " selected" : ""),
+        onclick: () => selectSingle(q, opt)
+      }, [opt]));
+    });
+    block.appendChild(grid);
+    if (q.allowOther && isOtherActive(q)) block.appendChild(renderOtherInput(q));
+
+  } else if (q.type === "single-sub") {
+    const grid = el("div", { class: "options" + (q.singleCol ? " single-col" : "") });
+    q.options.forEach(opt => {
+      const selected = answers[q.key] === opt.value;
+      grid.appendChild(el("button", {
+        class: "opt-btn" + (selected ? " selected" : ""),
+        onclick: () => selectSingle(q, opt.value)
+      }, [
+        el("span", {}, [opt.value]),
+        el("span", { class: "sub" }, [opt.sub])
+      ]));
+    });
+    block.appendChild(grid);
+
+  } else if (q.type === "multi") {
+    const grid = el("div", { class: "options" + (q.singleCol ? " single-col" : "") });
+    q.options.forEach(opt => {
+      const selected = answers[q.key] && answers[q.key].includes(opt);
+      grid.appendChild(el("button", {
+        class: "opt-btn" + (selected ? " selected" : ""),
+        onclick: () => toggleMulti(q, opt)
+      }, [opt]));
+    });
+    block.appendChild(grid);
+    if (q.allowOther && isOtherActive(q)) block.appendChild(renderOtherInput(q));
+
+  } else if (q.type === "text") {
+    block.appendChild(el("input", {
+      class: "text-input",
+      type: "text",
+      placeholder: q.placeholder || "",
+      value: answers[q.key] || "",
+      oninput: (e) => { answers[q.key] = e.target.value; if (e.target.value.trim() !== "") delete errors[q.key]; }
+    }));
+
+  } else if (q.type === "textarea") {
+    block.appendChild(el("textarea", {
+      class: "textarea-input",
+      placeholder: q.placeholder || "",
+      oninput: (e) => { answers[q.key] = e.target.value; if (e.target.value.trim() !== "") delete errors[q.key]; }
+    }, [answers[q.key] || ""]));
+  }
+
+  if (errors[q.key]) {
+    block.appendChild(el("div", { class: "field-error" }, ["To vprašanje je obvezno."]));
+  }
+
+  return block;
+}
+
+function renderForm() {
+  const page = PAGES[currentPage];
+  const container = el("div", {});
+
+  if (WEB_APP_URL.indexOf("PASTE_YOUR") === 0) {
+    container.appendChild(el("div", { class: "config-banner" }, [
+      "⚠️ WEB_APP_URL še ni nastavljen v kodi (obiski_app.html) - shranjevanje ne bo delovalo, dokler ne prilepiš URL-ja Google Apps Script deploya."
+    ]));
+  }
+
+  container.appendChild(renderProgress());
+  container.appendChild(el("div", { class: "page-title" }, [page.title]));
+  container.appendChild(el("div", { class: "page-sub" }, [`Stran ${currentPage + 1} od ${PAGES.length}`]));
+
+  visibleQuestions(page).forEach(q => {
+    container.appendChild(renderQuestion(q));
+  });
+
+  const navRow = el("div", { class: "nav-row" });
+  navRow.appendChild(el("button", {
+    class: "nav-btn back",
+    onclick: goBack
+  }, [currentPage === 0 ? "" : "← Nazaj"]));
+  navRow.appendChild(el("button", {
+    class: "nav-btn forward",
+    onclick: goNext
+  }, [currentPage === PAGES.length - 1 ? "SHRANI OBISK" : "Naprej →"]));
+  container.appendChild(navRow);
+
+  return container;
+}
+
+function renderStatus() {
+  if (view === "saving") {
+    return el("div", { class: "status-screen" }, [
+      el("div", { class: "icon" }, ["⏳"]),
+      el("div", { class: "msg" }, ["Shranjujem ..."])
+    ]);
+  }
+  if (view === "success") {
+    return el("div", { class: "status-screen" }, [
+      el("div", { class: "icon" }, ["✅"]),
+      el("div", { class: "msg" }, ["Obisk shranjen"]),
+      el("button", { class: "again-btn", onclick: resetAll }, ["Nov obisk"])
+    ]);
+  }
+  if (view === "error") {
+    return el("div", { class: "status-screen" }, [
+      el("div", { class: "icon" }, ["⚠️"]),
+      el("div", { class: "msg" }, ["Shranjevanje ni uspelo"]),
+      el("div", { class: "sub-text" }, ["Preveri internetno povezavo in WEB_APP_URL nastavitev."]),
+      el("button", { class: "retry-btn", onclick: saveVisit }, ["Poskusi znova"]),
+      el("button", { class: "nav-btn back", onclick: () => { view = "form"; render(); } }, ["← Nazaj na obrazec"])
+    ]);
+  }
+}
+
+function render() {
+  const app = document.getElementById("app");
+  app.innerHTML = "";
+  if (view === "form") app.appendChild(renderForm());
+  else app.appendChild(renderStatus());
+}
+
+render();
+</script>
+</body>
+</html>
